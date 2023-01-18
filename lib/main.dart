@@ -1,3 +1,4 @@
+import 'package:dermosolution_app/src/features/conditions/presentation/screens/conditions_screen.dart';
 import 'package:dermosolution_app/src/features/login/presentation/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -37,7 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: const <Widget>[
-            LoginScreen(),
+            ConditionsScreen(),
           ],
         ),
       ), // This trailing comma makes auto-formatting nicer for build methods.
