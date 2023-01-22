@@ -1,7 +1,6 @@
 import 'package:camera/camera.dart';
-import 'package:dermosolution_app/src/features/login/presentation/screens/login_screen.dart';
+import 'package:dermosolution_app/src/features/home/ui/screens/home.dart';
 import 'package:dermosolution_app/src/features/take_photos/presentation/screens/take_photo_screen.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -44,18 +43,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: SafeArea(
-      child: Center(
-          child: ElevatedButton(
-        onPressed: () async {
-          await availableCameras().then((value) => Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (_) => TakePhotoScreen(camera: value[0]))));
-        },
-        child: const Text("Take a Picture"),
-      )),
-    ));
+    return const Scaffold(body: HomeScreen());
   }
 }
