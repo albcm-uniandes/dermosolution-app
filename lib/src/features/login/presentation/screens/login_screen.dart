@@ -1,6 +1,6 @@
 import 'package:dermosolution_app/src/features/login/presentation/widgets/description_widget.dart';
 import 'package:dermosolution_app/src/features/login/presentation/widgets/form_widget.dart';
-import 'package:dermosolution_app/src/features/shared/widgets/logo.dart';
+import 'package:dermosolution_app/src/shared/widgets/logo.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {
