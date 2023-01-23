@@ -1,32 +1,46 @@
 import 'package:flutter/material.dart';
 
-final Widget loginForm = Form(
-  child: Column(
-    children: [
-      const InputGenerator(text: "Correo electronico"),
-      const InputGenerator(text: "Contraseña"),
-      Padding(
-        padding: const EdgeInsets.fromLTRB(0.0, 20, 0.0, 10),
-        child: SizedBox(
-          width: 200,
-          height: 50,
-          child: ElevatedButton(
-            onPressed: () {},
-            child: const Text("Ingresar"),
+import '../../../conditions/presentation/screens/conditions_screen.dart';
+
+class LoginFormWidget extends StatelessWidget {
+  const LoginFormWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      child: Column(
+        children: [
+          const InputGenerator(text: "Correo electronico"),
+          const InputGenerator(text: "Contraseña"),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(0.0, 20, 0.0, 10),
+            child: SizedBox(
+              width: 200,
+              height: 50,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ConditionsScreen()));
+                },
+                child: const Text("Ingresar"),
+              ),
+            ),
           ),
-        ),
+          SizedBox(
+            width: 200,
+            height: 50,
+            child: OutlinedButton(
+              onPressed: () {},
+              child: const Text('Crear cuenta'),
+            ),
+          ),
+        ],
       ),
-      SizedBox(
-        width: 200,
-        height: 50,
-        child: OutlinedButton(
-          onPressed: () {},
-          child: const Text('Crear cuenta'),
-        ),
-      ),
-    ],
-  ),
-);
+    );
+  }
+}
 
 class InputGenerator extends StatelessWidget {
   const InputGenerator({

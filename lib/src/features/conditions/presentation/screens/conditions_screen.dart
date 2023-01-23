@@ -9,16 +9,18 @@ class ConditionsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        header,
-        const Padding(
-          padding: EdgeInsets.all(30),
-          child: Text(conditions),
-        ),
-        rowButtons
-      ],
+    return Scaffold(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          header,
+          const Padding(
+            padding: EdgeInsets.all(30),
+            child: Text(conditions),
+          ),
+          const ConditionsButtons()
+        ],
+      ),
     );
   }
 }

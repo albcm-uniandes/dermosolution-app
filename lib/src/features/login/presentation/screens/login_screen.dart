@@ -14,7 +14,7 @@ class LoginScreen extends StatelessWidget {
       padding: EdgeInsets.fromLTRB(w * 0.03, 0, w * 0.03, 0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [widgetLogo, loginDescription, loginForm],
+        children: [widgetLogo, loginDescription, const LoginFormWidget()],
       ),
     );
   }
