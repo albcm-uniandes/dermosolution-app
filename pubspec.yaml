@@ -26,6 +26,7 @@ dependencies:
   path_provider:
   path:
   provider:
+  body_part_selector: ^0.0.3
   flutter_localizations:
     sdk: flutter
   intl: ^0.17.0 # Add this line

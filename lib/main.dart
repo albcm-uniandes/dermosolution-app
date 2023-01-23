@@ -1,4 +1,5 @@
 import 'package:camera/camera.dart';
+import 'package:dermosolution_app/src/features/body_part_selector/presentation/screens/body_part_selector_screen.dart';
 import 'package:dermosolution_app/src/features/home/ui/screens/home.dart';
 import 'package:dermosolution_app/src/features/take_photos/presentation/screens/take_photo_screen.dart';
 import 'package:flutter/material.dart';
@@ -43,6 +44,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(body: HomeScreen());
+    return const Scaffold(body: BodyPartSelectorScreen());
   }
 }
