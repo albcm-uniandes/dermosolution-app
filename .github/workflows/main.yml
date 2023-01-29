@@ -20,6 +20,8 @@ jobs:
           channel: 'stable'
     - name: Install dependencies
       run: flutter pub get
+      
+    - run: flutter gen-l10n
     - run: flutter build apk
           
     - name: Run tests
