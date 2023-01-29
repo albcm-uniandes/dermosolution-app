@@ -18,11 +18,10 @@ jobs:
       with:
           flutter-version: '3.3.8'
           channel: 'stable'
-    - run: flutter build apk
-          
     - name: Install dependencies
       run: flutter pub get
-      
+    - run: flutter build apk
+          
     - name: Run tests
       run: flutter test --coverage
       
