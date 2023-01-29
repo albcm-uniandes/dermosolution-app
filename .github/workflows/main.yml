@@ -1,0 +1,33 @@
+name: Flutter Workflow
+
+on: [push, workflow_dispatch]
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      
+    - name: Install Flutter
+      uses: subosito/flutter-action@v2
+      with:
+          flutter-version: '3.3.8'
+          channel: 'stable'
+          
+    - name: Install dependencies
+      run: flutter pub get
+      
+    - name: Run tests
+      run: flutter test --coverage
+      
+    - name: Build Apk      
+      run: flutter build apk
+      
+    - name: Build App bundle      
+      run: flutter build appbundle
+      
+    - name: Upload to code coverage
+      uses: codecov/codecov-action@v1.2.2
+      with:
+        token: ${{secrets.CODECOV_TOKEN}}
+        file: coverage/lcov.info
