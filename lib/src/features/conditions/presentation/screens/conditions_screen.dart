@@ -12,13 +12,13 @@ class ConditionsScreen extends StatelessWidget {
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          header,
-          const Padding(
+        children: const [
+          ScreenHeader(title: 'Terminos y condiciones'),
+          Padding(
             padding: EdgeInsets.all(30),
             child: Text(conditions),
           ),
-          const ConditionsButtons()
+          ConditionsButtons()
         ],
       ),
     );
