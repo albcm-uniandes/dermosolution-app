@@ -4,6 +4,7 @@ import 'package:dermosolution_app/src/features/home/ui/screens/home.dart';
 import 'package:dermosolution_app/src/features/login/presentation/screens/login_screen.dart';
 import 'package:dermosolution_app/src/features/medical_case/presentation/screens/case_creation_screen.dart';
 import 'package:dermosolution_app/src/features/take_photos/presentation/screens/take_photo_screen.dart';
+import 'package:dermosolution_app/src/features/user_profile/presentation/screens/user_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -49,7 +50,8 @@ class _MyHomePageState extends State<MyHomePage> {
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
-    CaseCreationScreen(),
+    //CaseCreationScreen(),
+    UserScreen(),
     Text(
       'Index 2: Configuración',
       style: optionStyle,
