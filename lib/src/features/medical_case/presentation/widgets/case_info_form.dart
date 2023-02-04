@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 
 import 'field_picker.dart';
 
-class CaseInfoForm extends StatelessWidget {
+class CaseInfoForm extends StatefulWidget {
   const CaseInfoForm({super.key});
 
+  @override
+  State<CaseInfoForm> createState() => _CaseInfoFormState();
+}
+
+class _CaseInfoFormState extends State<CaseInfoForm> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -12,11 +17,11 @@ class CaseInfoForm extends StatelessWidget {
       child: Column(
         children: const [
           FieldCreateCaseWidget(
-            dropList: ['Fisura'],
+            dropList: ['Fisura', 'asd'],
             fieldName: 'Tipo de lesión',
           ),
           FieldCreateCaseWidget(
-            dropList: ['Anillo'],
+            dropList: ['Anillo','asd'],
             fieldName: 'Forma',
           ),
           FieldCreateCaseWidget(
@@ -24,11 +29,11 @@ class CaseInfoForm extends StatelessWidget {
             fieldName: 'Numero de lesiones',
           ),
           FieldCreateCaseWidget(
-            dropList: ['Asimetrica'],
+            dropList: ['Asimetrica','0as'],
             fieldName: 'Distribución',
           ),
           FieldCreateCaseWidget(
-            dropList: ['Palido'],
+            dropList: ['Palido','asd'],
             fieldName: 'Color',
           ),
           FieldCreateCaseWidget(

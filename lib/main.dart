@@ -1,5 +1,3 @@
-import 'package:camera/camera.dart';
-import 'package:dermosolution_app/src/features/body_part_selector/presentation/screens/body_part_selector_screen.dart';
 import 'package:dermosolution_app/src/features/home/ui/screens/home.dart';
 import 'package:dermosolution_app/src/features/medical_case/presentation/screens/case_creation_screen.dart';
 import 'package:dermosolution_app/src/features/medical_case/providers/medical_case_provider.dart';
@@ -9,8 +7,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(ChangeNotifierProvider(
-      create: (context) => LesionTypeModel(), child: const MyApp()));
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {

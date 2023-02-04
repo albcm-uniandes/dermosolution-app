@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import '../../providers/medical_case_provider.dart';
-
-class FieldCreateCaseWidget extends StatelessWidget {
+class FieldCreateCaseWidget extends StatefulWidget {
   const FieldCreateCaseWidget(
       {super.key, required this.dropList, required this.fieldName});
 
@@ -11,13 +8,17 @@ class FieldCreateCaseWidget extends StatelessWidget {
   final String fieldName;
 
   @override
-  Widget build(BuildContext context) {
-    Provider.of<LesionTypeModel>(context,listen: false).addItem(dropList.first);
-    String dropdownValue =  Provider.of<LesionTypeModel>(context,listen: false).item;
+  State<FieldCreateCaseWidget> createState() => _FieldCreateCaseWidgetState();
+}
 
+class _FieldCreateCaseWidgetState extends State<FieldCreateCaseWidget> {
+  late String dropdownValue = widget.dropList.first;
+
+  @override
+  Widget build(BuildContext context) {
     return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
       Text(
-        fieldName,
+        widget.fieldName,
         style: const TextStyle(
           fontSize: 14,
           fontFamily: 'Comfortaa',
@@ -34,9 +35,9 @@ class FieldCreateCaseWidget extends StatelessWidget {
             style: const TextStyle(
                 fontSize: 12, fontFamily: 'Comfortaa', color: Colors.black),
             onChanged: (String? value) {
-              Provider.of<LesionTypeModel>(context, listen: false).addItem(value!);
-            },
-            items: dropList.map<DropdownMenuItem<String>>((String value) {
+              setState(() {dropdownValue = value!;});
+              },
+            items: widget.dropList.map<DropdownMenuItem<String>>((String value) {
               return DropdownMenuItem<String>(
                 value: value,
                 child: Text(value),
