@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class FieldUserFormWidget extends StatelessWidget {
-  const FieldUserFormWidget(
+class FieldUserPasswordWidget extends StatelessWidget {
+  const FieldUserPasswordWidget(
   {super.key, required this.fieldName});
 
   final String fieldName;
@@ -29,6 +29,9 @@ class FieldUserFormWidget extends StatelessWidget {
               fontFamily: 'Comfortaa',
               fontWeight: FontWeight.bold,
             ),
+            obscureText: true,
+            enableSuggestions: false,
+            autocorrect: false,
             decoration: InputDecoration(
               border: OutlineInputBorder(),
               hintText: fieldName,
@@ -38,16 +41,6 @@ class FieldUserFormWidget extends StatelessWidget {
               // This optional block of code can be used to run
               // code when the user saves the form.
             },
-            validator: (String? value) {
-              return (value != null && value.contains('@')) ? 'Do not use the @ char.' : null;
-            },
-
-            /*validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter some text';
-              }
-              return null;
-            },*/
           ),
         )
       ],

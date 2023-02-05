@@ -9,7 +9,7 @@ class ScreenHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 50),
+      padding: const EdgeInsets.only(top: 25),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -19,7 +19,7 @@ class ScreenHeader extends StatelessWidget {
                 fontFamily: 'Comfortaa',
                 fontWeight: FontWeight.bold,
               )),
-          Image.asset('lib/assets/images/logo.png', width: 80),
+          Image.asset('lib/assets/images/logo.png', width: 65),
         ],
       ),
     );

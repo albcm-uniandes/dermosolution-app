@@ -14,9 +14,7 @@ class UserScreen extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          const ScreenHeader(
-            title: 'Registro de usuario',
-          ),
+          const ScreenHeader(title: 'Registro de usuario',),
           const UserInfoForm(),
           const ConditionsButtons()
         ],

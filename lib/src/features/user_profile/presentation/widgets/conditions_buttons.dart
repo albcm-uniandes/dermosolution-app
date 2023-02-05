@@ -1,3 +1,5 @@
+import 'package:dermosolution_app/main.dart';
+import 'package:dermosolution_app/src/features/home/ui/screens/home.dart';
 import 'package:flutter/material.dart';
 
 class ConditionsButtons extends StatelessWidget {
@@ -6,7 +8,7 @@ class ConditionsButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 30),
+      padding: const EdgeInsets.only(top: 2),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -14,7 +16,12 @@ class ConditionsButtons extends StatelessWidget {
             width: 100,
             height: 30,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const MyHomePage(title: "title")),
+                );
+              },
               child: const Text("Aceptar"),
             ),
           ),
@@ -23,7 +30,7 @@ class ConditionsButtons extends StatelessWidget {
             height: 30,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromRGBO(239, 92, 92, 1)),
+                  backgroundColor: const Color.fromRGBO(239, 92, 92, 1.0)),
               onPressed: () {
                 Navigator.pop(context);
               },
