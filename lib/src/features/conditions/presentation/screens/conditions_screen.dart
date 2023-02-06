@@ -1,6 +1,7 @@
 import 'package:dermosolution_app/src/features/login/data/constants/conditions_constants.dart';
 import 'package:flutter/material.dart';
 
+import '../../../user_profile/presentation/screens/user_screen.dart';
 import '../widgets/conditions_buttons.dart';
 import '../widgets/header.dart';
 
@@ -18,7 +19,15 @@ class ConditionsScreen extends StatelessWidget {
             padding: EdgeInsets.all(30),
             child: Text(conditions),
           ),
-          ConditionsButtons(acceptCallback: (){}, rejectCallback: (){Navigator.pop(context);})
+          ConditionsButtons(acceptCallback: (){
+            {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const UserScreen()),
+              );
+            }
+          }, rejectCallback: (){Navigator.pop(context);})
         ],
       ),
     );
