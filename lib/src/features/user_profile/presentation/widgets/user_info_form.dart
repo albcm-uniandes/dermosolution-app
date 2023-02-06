@@ -11,17 +11,17 @@ class UserInfoForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(18, 5, 18, 5),
+      padding: const EdgeInsets.fromLTRB(18, 3, 18, 3),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: const [
+        children: [
           FieldUserFormWidget(fieldName: 'Nombre'),
           FieldUserFormWidget(fieldName: 'Apellido(s)'),
-          FieldUserFormWidget(fieldName: 'Fecha de nacimiento'),
+          FieldUserFormWidget(fieldName: 'Fecha de nacimiento (dd/mm/aaaa)'),
           FieldUserFormWidget(fieldName: 'Lugar de nacimiento'),
           FieldUserFormWidget(fieldName: 'Lugar de residencia'),
           FieldUserNumberWidget(fieldName: 'Edad'),
-          FieldUserFormWidget(fieldName: 'Sexo'),
+          FieldUserFormWidget(fieldName: 'Sexo (H, M)'),
           FieldUserNumberWidget(fieldName: 'Número de celular'),
           FieldUserEmailWidget(fieldName: 'Correo electrónico'),
           FieldUserPasswordWidget(fieldName: 'Contraseña'),
