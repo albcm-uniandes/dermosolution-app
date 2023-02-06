@@ -27,6 +27,7 @@ dependencies:
   path:
   provider:
   body_part_selector: ^0.0.3
+  image_picker: ^0.8.6+1
   flutter_localizations:
     sdk: flutter
   intl: ^0.17.0 # Add this line
