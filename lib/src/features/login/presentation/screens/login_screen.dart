@@ -11,10 +11,14 @@ class LoginScreen extends StatelessWidget {
     final double w = MediaQuery.of(context).size.width;
 
     return Padding(
-      padding: EdgeInsets.fromLTRB(w * 0.03, 0, w * 0.03, 0),
+      padding: EdgeInsets.fromLTRB(w * 0.03, 80, w * 0.03, 0),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [widgetLogo, loginDescription, const LoginFormWidget()],
+        //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          widgetLogo,
+          loginDescription,
+          const LoginFormWidget()
+        ],
       ),
     );
   }

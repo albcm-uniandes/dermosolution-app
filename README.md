@@ -3,6 +3,9 @@
 # dermosolution_app
 We care about for your skin
 
+## Avances
+![image](https://user-images.githubusercontent.com/78766013/215403550-af09e9f4-952e-4cea-b01b-506d9ac31e34.png)
+
 ## Authors
 - Albeiro Cuadrado
 - Giovany Briceño 

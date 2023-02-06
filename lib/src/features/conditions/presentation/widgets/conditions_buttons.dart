@@ -1,3 +1,4 @@
+import 'package:dermosolution_app/src/features/user_profile/presentation/screens/user_screen.dart';
 import 'package:flutter/material.dart';
 
 class ConditionsButtons extends StatelessWidget {
@@ -14,7 +15,13 @@ class ConditionsButtons extends StatelessWidget {
             width: 100,
             height: 30,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const UserScreen()),
+                );
+              },
               child: const Text("Aceptar"),
             ),
           ),
