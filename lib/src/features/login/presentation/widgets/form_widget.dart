@@ -7,6 +7,7 @@ class LoginFormWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     return Form(
       child: Column(
         children: [
@@ -15,24 +16,24 @@ class LoginFormWidget extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.fromLTRB(0.0, 20, 0.0, 10),
             child: SizedBox(
-              width: 200,
-              height: 50,
+              width: screenWidth * 0.75,
+              height: 40,
               child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const ConditionsScreen()));
-                },
+                onPressed: () { },
                 child: const Text("Ingresar"),
               ),
             ),
           ),
           SizedBox(
-            width: 200,
-            height: 50,
+            width: screenWidth * 0.75,
+            height: 40,
             child: OutlinedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ConditionsScreen()));
+              },
               child: const Text('Crear cuenta'),
             ),
           ),
@@ -53,7 +54,7 @@ class InputGenerator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(6.0),
       child: TextFormField(
         obscureText: true,
         decoration: InputDecoration(
