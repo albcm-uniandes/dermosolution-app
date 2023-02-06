@@ -1,8 +1,16 @@
+import 'package:dermosolution_app/src/features/user_profile/presentation/screens/user_screen.dart';
 import 'package:flutter/material.dart';
 
-class ConditionsButtons extends StatelessWidget {
-  const ConditionsButtons({super.key});
+class ConditionsButtons extends StatefulWidget {
+  const ConditionsButtons({super.key, required this.acceptCallback, required this.rejectCallback});
+  final VoidCallback acceptCallback;
+  final VoidCallback rejectCallback;
 
+  @override
+  State<ConditionsButtons> createState() => _ConditionsButtonsState();
+}
+
+class _ConditionsButtonsState extends State<ConditionsButtons> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -14,7 +22,7 @@ class ConditionsButtons extends StatelessWidget {
             width: 100,
             height: 30,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: widget.acceptCallback,
               child: const Text("Aceptar"),
             ),
           ),
@@ -24,9 +32,7 @@ class ConditionsButtons extends StatelessWidget {
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromRGBO(239, 92, 92, 1)),
-              onPressed: () {
-                Navigator.pop(context);
-              },
+              onPressed: widget.rejectCallback,
               child: const Text("Rechazar"),
             ),
           ),
