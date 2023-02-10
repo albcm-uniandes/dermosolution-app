@@ -32,7 +32,6 @@ Future<Paciente> createPaciente(String nombres, String apellidos, String fechaNa
 
   if (paciente.statusCode == 400) {
     print("Error");
-    print(paciente.reasonPhrase);
     print(paciente.body);
   }
 

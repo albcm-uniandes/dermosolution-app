@@ -1,33 +1,35 @@
 import 'package:flutter/material.dart';
-import '../conditions/presentation/widgets/header.dart';
+//import '../conditions/presentation/widgets/header.dart';
+import '../user_profile/presentation/widgets/header.dart';
 import 'package:dermosolution_app/src/features/user_profile/domain/models/patient_profile.dart';
 import 'package:dermosolution_app/src/features/user_profile/service/service_profile.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
+
   @override
   _RegisterPageState createState() => _RegisterPageState();
 }
 
 class _RegisterPageState extends State<RegisterPage> {
   late Future<Paciente> _futurePaciente;
-  GlobalKey<FormState> keyForm = new GlobalKey();
-  TextEditingController  nombreCtrl = new TextEditingController();
-  TextEditingController  apellidoCtrl = new TextEditingController();
-  TextEditingController  fechaNacimientoCtrl = new TextEditingController();
-  TextEditingController  lugarNacimientoCtrl = new TextEditingController();
-  TextEditingController  lugarResidenciaCtrl = new TextEditingController();
-  TextEditingController  edadCtrl = new TextEditingController();
-  TextEditingController  sexoCtrl = new TextEditingController();
-  TextEditingController  celularCtrl = new TextEditingController();
-  TextEditingController  emailCtrl = new TextEditingController();
-  TextEditingController  passwordCtrl = new TextEditingController();
-  TextEditingController  repeatPasswordCtrl = new TextEditingController();
+  GlobalKey<FormState> keyForm = GlobalKey();
+  TextEditingController  nombreCtrl = TextEditingController();
+  TextEditingController  apellidoCtrl = TextEditingController();
+  TextEditingController  fechaNacimientoCtrl = TextEditingController();
+  TextEditingController  lugarNacimientoCtrl = TextEditingController();
+  TextEditingController  lugarResidenciaCtrl = TextEditingController();
+  TextEditingController  edadCtrl = TextEditingController();
+  TextEditingController  sexoCtrl = TextEditingController();
+  TextEditingController  celularCtrl = TextEditingController();
+  TextEditingController  emailCtrl = TextEditingController();
+  TextEditingController  passwordCtrl = TextEditingController();
+  TextEditingController  repeatPasswordCtrl = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    return Scaffold(
+    /*return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -35,13 +37,24 @@ class _RegisterPageState extends State<RegisterPage> {
           formUI(),
         ],
       ),
-    );
-  }
-
-  formItemsDesign(icon, item) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 7),
-      child: Card(child: ListTile(leading: Icon(icon), title: item)),
+    );*/
+    return Scaffold(
+      body: Padding(
+          padding: const EdgeInsets.fromLTRB(3,18,3,18),
+          child: SizedBox(
+            //child: const ScreenHeader(title: 'Registro de usuario',),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ScreenHeader(title: 'Registro de usuario',),
+                  formUI(),
+                ],
+              ),
+            ),
+          )
+      ),
     );
   }
 
@@ -124,71 +137,89 @@ class _RegisterPageState extends State<RegisterPage> {
                 border: OutlineInputBorder(),
                 hintText: fieldName,
               ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter some text';
+                }
+                return null;
+              },
             ),
-          )
+          ),
         ],
       ),
     );
   }
 
-  String gender = 'hombre';
-
   Widget formUI() {
-    return  Column(
-      children: <Widget>[
-
-        itemsFormText("Nombre", nombreCtrl),
-        itemsFormText("Apellido(s)", apellidoCtrl),
-        itemsFormText("Fecha de nacimiento (aaaa-mm-dd", fechaNacimientoCtrl),
-        itemsFormText("Lugar de nacimiento", lugarNacimientoCtrl),
-        itemsFormText("Lugar de residencia", lugarResidenciaCtrl),
-        itemsFormNumber("Edad", edadCtrl),
-        itemsFormText("Sexo (HOMBRE, MUJER)", sexoCtrl),
-        itemsFormText("Número de celular", celularCtrl),
-        itemsFormText("Correo electrónico", emailCtrl),
-        itemsFormPassword("Contraseña", passwordCtrl),
-        itemsFormPassword("Confirmar contraseña", repeatPasswordCtrl),
-
-      Row (
-        children: [
-          SizedBox(
-              width: 100,
-              height: 30,
-              child: ElevatedButton(
-                onPressed: () {
-                  context: context;
-                  save();
-                },
-                child: const Text("Aceptar"),
-              )
-          ),
-          SizedBox(
-            width: 100,
-            height: 30,
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromRGBO(239, 92, 92, 1.0)),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text("Rechazar"),
-            ),
-          ),
-        ],
-      )
-
-      ],
+    return  Padding(
+      padding: const EdgeInsets.fromLTRB(18, 3, 18, 3),
+      child: Scrollbar(
+        isAlwaysShown: true, //always show scrollbar
+        thickness: 10, //width of scrollbar
+        radius: Radius.circular(20), //corner radius of scrollbar
+        scrollbarOrientation: ScrollbarOrientation.left, //which side to show scrollbar
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            itemsFormText("Nombre", nombreCtrl),
+            itemsFormText("Apellido(s)", apellidoCtrl),
+            itemsFormText("Fecha de nacimiento (aaaa-mm-dd", fechaNacimientoCtrl),
+            itemsFormText("Lugar de nacimiento", lugarNacimientoCtrl),
+            itemsFormText("Lugar de residencia", lugarResidenciaCtrl),
+            itemsFormNumber("Edad", edadCtrl),
+            itemsFormText("Sexo (HOMBRE, MUJER)", sexoCtrl),
+            itemsFormText("Número de celular", celularCtrl),
+            itemsFormText("Correo electrónico", emailCtrl),
+            itemsFormPassword("Contraseña", passwordCtrl),
+            itemsFormPassword("Confirmar contraseña", repeatPasswordCtrl),
+            controlButtons(),
+          ],
+        ),
+      ),
     );
   }
 
+  controlButtons(){
+    double screenWidth = MediaQuery.of(context).size.width;
+    return Padding(
+        padding: const EdgeInsets.fromLTRB(3, 3, 3, 3),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            SizedBox(
+                width: 100,
+                height: 30,
+                child: ElevatedButton(
+                  onPressed: () {
+                    save();
+                  },
+                  child: const Text("Aceptar"),
+                )
+            ),
+            SizedBox(
+              width: 100,
+              height: 30,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromRGBO(239, 92, 92, 1.0)),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text("Rechazar"),
+              ),
+            ),
+          ],
+        ),
+      );
+  }
 
 
   String validatePassword(String value) {
-    print("valorrr $value passsword ${passwordCtrl.text}");
     if (value != passwordCtrl.text) {
       return "Las contraseñas no coinciden";
+    } else {
+      return "Ok";
     }
-    return "";
   }
 
   String validateName(String value) {
@@ -252,6 +283,13 @@ class _RegisterPageState extends State<RegisterPage> {
         emailCtrl.text,
         passwordCtrl.text
     );
+    nombreCtrl.value.text.;
+    super.dispose();
+    if (keyForm.currentState!.validate()) {
+      print("Correo ${passwordCtrl.text}");
+      keyForm.currentState!.reset();
+    }
+
 
   }
 
