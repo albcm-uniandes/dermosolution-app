@@ -4,15 +4,16 @@ class Paciente {
   final String fechaNacimiento;
   final String lugarNacimiento;
   final String lugarResidencia;
+  final String edad;
+  final String sexo;
   final String numeroCelular;
   final String correo;
   final String clave;
-  final String edad;
-  final String sexo;
+
 
   const Paciente({ required this.nombres,required  this.apellidos, required this.fechaNacimiento,
-    required this.lugarNacimiento, required this.lugarResidencia, required this.numeroCelular,
-    required this.correo, required this.clave, required this.edad, required this.sexo});
+    required this.lugarNacimiento, required this.lugarResidencia, required this.edad, required this.sexo,
+    required this.numeroCelular, required this.correo, required this.clave});
 
   factory Paciente.fromJson(Map<String, dynamic> json) {
     return Paciente(

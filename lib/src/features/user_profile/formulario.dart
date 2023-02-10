@@ -139,7 +139,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
         itemsFormText("Nombre", nombreCtrl),
         itemsFormText("Apellido(s)", apellidoCtrl),
-        itemsFormText("Fecha de nacimiento (dd/mm/aaaa", fechaNacimientoCtrl),
+        itemsFormText("Fecha de nacimiento (aaaa-mm-dd", fechaNacimientoCtrl),
         itemsFormText("Lugar de nacimiento", lugarNacimientoCtrl),
         itemsFormText("Lugar de residencia", lugarResidenciaCtrl),
         itemsFormNumber("Edad", edadCtrl),
@@ -149,16 +149,34 @@ class _RegisterPageState extends State<RegisterPage> {
         itemsFormPassword("Contraseña", passwordCtrl),
         itemsFormPassword("Confirmar contraseña", repeatPasswordCtrl),
 
-      SizedBox(
-        width: 100,
-        height: 30,
-        child: ElevatedButton(
-          onPressed: () {
-            context: context;
-            save();
-        },
-        child: const Text("Aceptar"),
-      )),
+      Row (
+        children: [
+          SizedBox(
+              width: 100,
+              height: 30,
+              child: ElevatedButton(
+                onPressed: () {
+                  context: context;
+                  save();
+                },
+                child: const Text("Aceptar"),
+              )
+          ),
+          SizedBox(
+            width: 100,
+            height: 30,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromRGBO(239, 92, 92, 1.0)),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text("Rechazar"),
+            ),
+          ),
+        ],
+      )
+
       ],
     );
   }
@@ -221,6 +239,20 @@ class _RegisterPageState extends State<RegisterPage> {
     print("Correo " + emailCtrl.text);
     print("Password " + passwordCtrl.text);
     print("Repassword " + repeatPasswordCtrl.text);
+    print(url);
+    _futurePaciente = createPaciente(
+        nombreCtrl.text,
+        apellidoCtrl.text,
+        fechaNacimientoCtrl.text,
+        lugarNacimientoCtrl.text,
+        lugarResidenciaCtrl.text,
+        edadCtrl.text,
+        sexoCtrl.text,
+        celularCtrl.text,
+        emailCtrl.text,
+        passwordCtrl.text
+    );
+
   }
 
   FutureBuilder<Paciente> buildFutureBuilder() {

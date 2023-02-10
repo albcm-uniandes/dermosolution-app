@@ -7,8 +7,8 @@ import 'package:dermosolution_app/src/features/user_profile/domain/models/patien
 String url = "$baseUrl/pacientes/";
 
 Future<Paciente> createPaciente(String nombres, String apellidos, String fechaNacimiento,
-    String lugarNacimiento, String lugarResidencia, String numeroCelular, String correo,
-    String clave, String edad, String sexo) async {
+    String lugarNacimiento, String lugarResidencia,  String edad, String sexo,
+    String numeroCelular, String correo, String clave) async {
 
   final paciente = await http.post(
       Uri.parse(url),
@@ -24,7 +24,7 @@ Future<Paciente> createPaciente(String nombres, String apellidos, String fechaNa
           'numero_celular': numeroCelular.toString(),
           'correo': correo,
           'clave': clave,
-          'edad': edad.toString(),
+          'edad': edad,
           'sexo': sexo,
           'casos_medicos': []
       }),
