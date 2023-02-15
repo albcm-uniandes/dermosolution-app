@@ -46,8 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
     LoginScreen(),
-    RegisterPage(),
-    //CaseCreationScreen(),
+    CaseCreationScreen(),
     Text(
       'Index 2: Configuración',
       style: optionStyle,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-//import '../conditions/presentation/widgets/header.dart';
 import '../user_profile/presentation/widgets/header.dart';
 import 'package:dermosolution_app/src/features/user_profile/domain/models/patient_profile.dart';
 import 'package:dermosolution_app/src/features/user_profile/service/service_profile.dart';
@@ -40,7 +39,7 @@ class _RegisterPageState extends State<RegisterPage> {
     );*/
     return Scaffold(
       body: Padding(
-          padding: const EdgeInsets.fromLTRB(3,18,3,18),
+          padding: const EdgeInsets.fromLTRB(3, 35, 3, 25),
           child: SizedBox(
             //child: const ScreenHeader(title: 'Registro de usuario',),
             child: SingleChildScrollView(
@@ -137,12 +136,6 @@ class _RegisterPageState extends State<RegisterPage> {
                 border: OutlineInputBorder(),
                 hintText: fieldName,
               ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter some text';
-                }
-                return null;
-              },
             ),
           ),
         ],
@@ -152,9 +145,9 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Widget formUI() {
     return  Padding(
-      padding: const EdgeInsets.fromLTRB(18, 3, 18, 3),
+      padding: const EdgeInsets.fromLTRB(18, 18, 18, 18),
       child: Scrollbar(
-        isAlwaysShown: true, //always show scrollbar
+        isAlwaysShown: false, //always show scrollbar
         thickness: 10, //width of scrollbar
         radius: Radius.circular(20), //corner radius of scrollbar
         scrollbarOrientation: ScrollbarOrientation.left, //which side to show scrollbar
@@ -182,7 +175,7 @@ class _RegisterPageState extends State<RegisterPage> {
   controlButtons(){
     double screenWidth = MediaQuery.of(context).size.width;
     return Padding(
-        padding: const EdgeInsets.fromLTRB(3, 3, 3, 3),
+        padding: const EdgeInsets.fromLTRB(3, 25, 3, 3),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -212,7 +205,6 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
       );
   }
-
 
   String validatePassword(String value) {
     if (value != passwordCtrl.text) {
@@ -257,19 +249,7 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
-  save() {
-    print("Guardando formulario");
-    print("Nombre " + nombreCtrl.text);
-    print("Apellido(s) " + apellidoCtrl.text);
-    print("Fecha nacimiento " + fechaNacimientoCtrl.text);
-    print("Lugar nacimiento " + lugarNacimientoCtrl.text);
-    print("Lugar residencia " + lugarResidenciaCtrl.text);
-    print("Edad " + edadCtrl.text);
-    print("Sexo " + sexoCtrl.text);
-    print("Celular " + celularCtrl.text);
-    print("Correo " + emailCtrl.text);
-    print("Password " + passwordCtrl.text);
-    print("Repassword " + repeatPasswordCtrl.text);
+  void save() {
     print(url);
     _futurePaciente = createPaciente(
         nombreCtrl.text,
@@ -283,14 +263,21 @@ class _RegisterPageState extends State<RegisterPage> {
         emailCtrl.text,
         passwordCtrl.text
     );
-    nombreCtrl.value.text.;
-    super.dispose();
-    if (keyForm.currentState!.validate()) {
-      print("Correo ${passwordCtrl.text}");
-      keyForm.currentState!.reset();
+
+    if (_futurePaciente != null) {
+      _showAlertDialog("Registrar usuario", "Usuario registrado con exito");
+      nombreCtrl.clear();
+      apellidoCtrl.clear();
+      fechaNacimientoCtrl.clear();
+      lugarNacimientoCtrl.clear();
+      lugarResidenciaCtrl.clear();
+      edadCtrl.clear();
+      sexoCtrl.clear();
+      celularCtrl.clear();
+      emailCtrl.clear();
+      passwordCtrl.clear();
+      repeatPasswordCtrl.clear();
     }
-
-
   }
 
   FutureBuilder<Paciente> buildFutureBuilder() {
@@ -304,6 +291,24 @@ class _RegisterPageState extends State<RegisterPage> {
         }
         return const CircularProgressIndicator();
       },
+    );
+  }
+
+  void _showAlertDialog(titulo, mensaje) {
+    showDialog(
+        context: context,
+        builder: (buildcontext) {
+          return AlertDialog(
+            title: Text(titulo),
+            content: Text(mensaje),
+            actions: <Widget>[
+              ElevatedButton(
+                child: Text("CERRAR", style: TextStyle(color: Colors.white),),
+                onPressed: (){ Navigator.of(context).pop(); },
+              )
+            ],
+          );
+        }
     );
   }
 }

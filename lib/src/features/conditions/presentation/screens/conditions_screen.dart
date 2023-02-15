@@ -1,4 +1,5 @@
 import 'package:dermosolution_app/src/features/login/data/constants/conditions_constants.dart';
+import 'package:dermosolution_app/src/features/user_profile/formulario.dart';
 import 'package:flutter/material.dart';
 
 import '../../../user_profile/presentation/screens/user_screen.dart';
@@ -24,7 +25,7 @@ class ConditionsScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => const UserScreen()),
+                    builder: (context) => const RegisterPage()),
               );
             }
           }, rejectCallback: (){Navigator.pop(context);})

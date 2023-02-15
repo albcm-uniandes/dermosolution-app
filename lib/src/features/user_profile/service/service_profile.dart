@@ -21,7 +21,7 @@ Future<Paciente> createPaciente(String nombres, String apellidos, String fechaNa
           'fecha_nacimiento': fechaNacimiento,
           'lugar_nacimiento': lugarNacimiento,
           'lugar_residencia': lugarResidencia,
-          'numero_celular': numeroCelular.toString(),
+          'numero_celular': numeroCelular,
           'correo': correo,
           'clave': clave,
           'edad': edad,
@@ -30,14 +30,13 @@ Future<Paciente> createPaciente(String nombres, String apellidos, String fechaNa
       }),
     );
 
-  if (paciente.statusCode == 400) {
-    print("Error");
-    print(paciente.body);
-  }
-
   if (paciente.statusCode == 201) {
+    var jsonString =
+        '{"nombres": "400"}';
+    //return Paciente.fromJson(jsonDecode(jsonString));
     return Paciente.fromJson(jsonDecode(paciente.body));
   }else {
     throw Exception('Error en la creación del paciente');
   }
 }
+
