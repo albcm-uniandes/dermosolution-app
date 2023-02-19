@@ -1,3 +1,4 @@
+import 'package:dermosolution_app/src/features/configuration/form_configuration.dart';
 import 'package:dermosolution_app/src/features/login/presentation/screens/login_screen.dart';
 import 'package:dermosolution_app/src/features/medical_case/presentation/screens/case_creation_screen.dart';
 import 'package:dermosolution_app/src/features/user_profile/formulario.dart';
@@ -47,10 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
   static const List<Widget> _widgetOptions = <Widget>[
     LoginScreen(),
     CaseCreationScreen(),
-    Text(
-      'Index 2: Configuración',
-      style: optionStyle,
-    ),
+    Configuration(),
   ];
 
   void _onItemTapped(int index) {
