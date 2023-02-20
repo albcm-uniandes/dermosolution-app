@@ -44,7 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
-    LoginScreen(),
+    LoginScreen(), // Todo. Hide app bar in login screen
     CaseCreationScreen(),
     Text(
       'Index 2: Configuración',

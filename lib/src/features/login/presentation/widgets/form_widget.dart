@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../conditions/presentation/screens/conditions_screen.dart';
+import '../../../home/ui/screens/home.dart';
 
 class LoginFormWidget extends StatelessWidget {
   const LoginFormWidget({super.key});
@@ -19,7 +20,12 @@ class LoginFormWidget extends StatelessWidget {
               width: screenWidth * 0.75,
               height: 40,
               child: ElevatedButton(
-                onPressed: () { },
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const HomeScreen()));
+                },
                 child: const Text("Ingresar"),
               ),
             ),
