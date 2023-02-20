@@ -22,10 +22,10 @@ class _CaseCreationScreenState extends State<CaseCreationScreen> {
   Future pickImage(ImageSource source) async {
     try {
       final image = await ImagePicker().pickImage(source: source);
-      if(image == null) return;
+      if (image == null) return;
       final imageTemp = File(image.path);
       setState(() => this.image = imageTemp);
-    } on PlatformException catch(e) {
+    } on PlatformException catch (e) {
       print('Failed to pick image: $e');
     }
   }
@@ -48,7 +48,7 @@ class _CaseCreationScreenState extends State<CaseCreationScreen> {
               )),
           Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
             IconButton(
-              iconSize: 70 ,
+              iconSize: 70,
               onPressed: () {
                 pickImage(ImageSource.camera);
               },
@@ -57,13 +57,11 @@ class _CaseCreationScreenState extends State<CaseCreationScreen> {
               ),
             ),
             IconButton(
-              iconSize:70,
+              iconSize: 70,
               onPressed: () {
                 pickImage(ImageSource.gallery);
               },
-              icon: const Icon(
-                Icons.image
-              ),
+              icon: const Icon(Icons.image),
             ),
           ]),
           ConditionsButtons(acceptCallback: () {}, rejectCallback: () {})
