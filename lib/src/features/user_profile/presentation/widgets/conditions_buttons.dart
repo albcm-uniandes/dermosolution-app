@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import '../../domain/models/patient_profile.dart';
 
-
 class ConditionsButtons extends StatelessWidget {
   ConditionsButtons({super.key});
 
@@ -27,13 +26,20 @@ class ConditionsButtons extends StatelessWidget {
                   context,
                   MaterialPageRoute(builder: (context) => const MyHomePage(title: "title")),
                 );*/
-                    context: context;
-                    print(url);
-                    _futurePaciente = createPaciente(
-                      'Juan', 'Acevedo', "2023-01-01", 'Medellín', 'Rionegro',
-                      '3103842142', 'j.acevedob@uniandes.edu.co','abcd1234', '42','HOMBRE'
-                    );
-
+                context:
+                context;
+                print(url);
+                _futurePaciente = createPaciente(
+                    'Juan',
+                    'Acevedo',
+                    "2023-01-01",
+                    'Medellín',
+                    'Rionegro',
+                    '3103842142',
+                    'j.acevedob@uniandes.edu.co',
+                    'abcd1234',
+                    '42',
+                    'HOMBRE');
               },
               child: const Text("Aceptar"),
             ),

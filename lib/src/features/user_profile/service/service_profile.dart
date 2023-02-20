@@ -7,8 +7,8 @@ import 'package:dermosolution_app/src/features/user_profile/domain/models/patien
 String url = "$baseUrl/pacientes/";
 
 Future<Paciente> createPaciente(String nombres, String apellidos, String fechaNacimiento,
-    String lugarNacimiento, String lugarResidencia, String numeroCelular, String correo,
-    String clave, String edad, String sexo) async {
+    String lugarNacimiento, String lugarResidencia,  String edad, String sexo,
+    String numeroCelular, String correo, String clave) async {
 
   final paciente = await http.post(
       Uri.parse(url),
@@ -21,18 +21,22 @@ Future<Paciente> createPaciente(String nombres, String apellidos, String fechaNa
           'fecha_nacimiento': fechaNacimiento,
           'lugar_nacimiento': lugarNacimiento,
           'lugar_residencia': lugarResidencia,
-          'numero_celular': numeroCelular.toString(),
+          'numero_celular': numeroCelular,
           'correo': correo,
           'clave': clave,
-          'edad': edad.toString(),
+          'edad': edad,
           'sexo': sexo,
           'casos_medicos': []
       }),
     );
 
   if (paciente.statusCode == 201) {
+    var jsonString =
+        '{"nombres": "400"}';
+    //return Paciente.fromJson(jsonDecode(jsonString));
     return Paciente.fromJson(jsonDecode(paciente.body));
-  } else {
+  }else {
     throw Exception('Error en la creación del paciente');
   }
 }
+
