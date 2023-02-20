@@ -6,7 +6,7 @@ class Paciente {
   final String lugarResidencia;
   final String edad;
   final String sexo;
-  final int numeroCelular;
+  final String numeroCelular;
   final String correo;
   final String clave;
 

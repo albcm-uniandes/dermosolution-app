@@ -27,7 +27,7 @@ class _FieldCreateCaseWidgetState extends State<FieldCreateCaseWidget> {
         ),
       ),
       SizedBox(
-          width: 120,
+          width: 100,
           child: DropdownButton<String>(
             isExpanded: true,
             value: dropdownValue,

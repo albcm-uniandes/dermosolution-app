@@ -3,7 +3,6 @@ import 'package:dermosolution_app/src/features/conditions/presentation/widgets/c
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:simple_s3/simple_s3.dart';
 import '../../../body_part_selector/presentation/screens/body_part_selector_screen.dart';
 import '../../../conditions/presentation/widgets/header.dart';
 import '../widgets/case_info_form.dart';
@@ -25,7 +24,6 @@ class _CaseCreationScreenState extends State<CaseCreationScreen> {
   late dynamic formInfo = '';
 
   Future pickImage(ImageSource source) async {
-    // Todo Add multiples photos
     try {
       final image = await ImagePicker().pickImage(source: source);
       if (image == null) return;
@@ -46,7 +44,6 @@ class _CaseCreationScreenState extends State<CaseCreationScreen> {
         'title': title,
       }),
     );
-  }
   }
 
   @override
@@ -122,7 +119,7 @@ class _CaseCreationScreenState extends State<CaseCreationScreen> {
                   // Todo: show feedback about parts selected
                   ConditionsButtons(
                       acceptCallback: () {
-                        {uploadFile();}
+                        {}
                       },
                       rejectCallback: () {})
                 ],
