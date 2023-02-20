@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import '../user_profile/presentation/widgets/header.dart';
 import 'package:dermosolution_app/src/features/user_profile/domain/models/patient_profile.dart';
@@ -102,6 +104,12 @@ class _RegisterPageState extends State<RegisterPage> {
                 fontFamily: 'Comfortaa',
                 fontWeight: FontWeight.bold,
               ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter some text';
+                }
+                return null;
+              },
               controller: controller,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
@@ -210,25 +218,25 @@ class _RegisterPageState extends State<RegisterPage> {
     if (value != passwordCtrl.text) {
       return "Las contraseñas no coinciden";
     } else {
-      return "Ok";
+      return "";
     }
   }
 
-  String validateName(String value) {
+  String validateText(String campo, String value) {
     String pattern = r'(^[a-zA-Z ]*$)';
     RegExp regExp = new RegExp(pattern);
-    if (value.length == 0) {
-      return "El nombre es necesario";
+    if (value.isEmpty) {
+      return "El $campo es necesario";
     } else if (!regExp.hasMatch(value)) {
-      return "El nombre debe de ser a-z y A-Z";
+      return "El $campo debe de ser a-z y A-Z";
     }
-    return "null";
+    return "";
   }
 
   String validateMobile(String value) {
     String patttern = r'(^[0-9]*$)';
     RegExp regExp = new RegExp(patttern);
-    if (value.length == 0) {
+    if (value.isEmpty) {
       return "El telefono es necesariod";
     } else if (value.length != 10) {
       return "El numero debe tener 10 digitos";
@@ -240,7 +248,7 @@ class _RegisterPageState extends State<RegisterPage> {
     String pattern =
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
     RegExp regExp = new RegExp(pattern);
-    if (value.length == 0) {
+    if (value.isEmpty) {
       return "El correo es necesario";
     } else if (!regExp.hasMatch(value)) {
       return "Correo invalido";
@@ -249,7 +257,41 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
+  String validateDate(String value) {
+    String pattern =
+        r'^\d{4}([\-/.])(0?[1-9]|1[1-2])\1(3[01]|[12][0-9]|0?[1-9])$';
+    RegExp regExp = new RegExp(pattern);
+    if (value.isEmpty) {
+      return "La fecha es necesaria";
+    }else if (!regExp.hasMatch(value)) {
+      return "Fecha invalida (aaaa-mm-dd)";
+    } else {
+      return "";
+    }
+  }
+
+  String validateSex(String campo, String value) {
+
+    if (value.isEmpty) {
+      return "El $campo es necesario";
+    } else if (value == "HOMBRE" || value == "MUJER") {
+      return "";
+    }
+    return "El $campo debe de ser HOMBRE o MUJER";
+  }
+
+
+
   void save() {
+    String salida = "";
+    salida = "${validateText("nombre", nombreCtrl.text)}\n";
+    salida = "$salida${validateText("apellido", nombreCtrl.text)}\n";
+    salida = "$salida${validateDate(fechaNacimientoCtrl.text)}\n";
+    salida = "$salida${validateText("lugar de nacimiento", lugarNacimientoCtrl.text)}\n";
+    salida = "$salida${validateText("lugar de residencia", lugarResidenciaCtrl.text)}\n";
+    salida = "$salida${validateSex("sexo", sexoCtrl.text)}\n";
+    salida = "$salida${validateEmail(emailCtrl.text)}\n";
+    salida = salida + validatePassword(repeatPasswordCtrl.text);
     print(url);
     _futurePaciente = createPaciente(
         nombreCtrl.text,
@@ -264,19 +306,25 @@ class _RegisterPageState extends State<RegisterPage> {
         passwordCtrl.text
     );
 
+
     if (_futurePaciente != null) {
-      _showAlertDialog("Registrar usuario", "Usuario registrado con exito");
-      nombreCtrl.clear();
-      apellidoCtrl.clear();
-      fechaNacimientoCtrl.clear();
-      lugarNacimientoCtrl.clear();
-      lugarResidenciaCtrl.clear();
-      edadCtrl.clear();
-      sexoCtrl.clear();
-      celularCtrl.clear();
-      emailCtrl.clear();
-      passwordCtrl.clear();
-      repeatPasswordCtrl.clear();
+      if (salida.length<11){
+        _showAlertDialog("Registrar usuario", "Usuario registrado exitosamente", true);
+        nombreCtrl.clear();
+        apellidoCtrl.clear();
+        fechaNacimientoCtrl.clear();
+        lugarNacimientoCtrl.clear();
+        lugarResidenciaCtrl.clear();
+        edadCtrl.clear();
+        sexoCtrl.clear();
+        celularCtrl.clear();
+        emailCtrl.clear();
+        passwordCtrl.clear();
+        repeatPasswordCtrl.clear();
+      } else {
+        _showAlertDialog("Registrar usuario", salida, false );
+      }
+
     }
   }
 
@@ -294,7 +342,7 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  void _showAlertDialog(titulo, mensaje) {
+  void _showAlertDialog(titulo, mensaje, estado) {
     showDialog(
         context: context,
         builder: (buildcontext) {
@@ -304,7 +352,13 @@ class _RegisterPageState extends State<RegisterPage> {
             actions: <Widget>[
               ElevatedButton(
                 child: Text("CERRAR", style: TextStyle(color: Colors.white),),
-                onPressed: (){ Navigator.of(context).pop(); },
+                onPressed: (){
+                  if (estado == true) {
+                    Navigator.pushNamed(context, 'perfil_dermatologico');
+                  } else {
+                    Navigator.pop(context);
+                  }
+                  },
               )
             ],
           );

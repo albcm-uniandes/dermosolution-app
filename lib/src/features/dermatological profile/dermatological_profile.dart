@@ -1,4 +1,5 @@
 import 'package:checkbox_grouped/checkbox_grouped.dart';
+import 'package:dermosolution_app/src/features/dermatological%20profile/service/service_profile.dart';
 import 'package:flutter/material.dart';
 import '../user_profile/presentation/widgets/header.dart';
 import 'package:dermosolution_app/src/features/user_profile/domain/models/patient_profile.dart';
@@ -15,11 +16,23 @@ class DermatologicalProfile extends StatefulWidget {
 
 class _DermatologicalProfile extends State<DermatologicalProfile> {
   late Future<Paciente> _futurePaciente;
+
   GlobalKey<FormState> keyForm = GlobalKey();
   GroupController controller = GroupController();
+  late String nombre;
+  late String apellido;
+  late String fecha;
+  late String lugarNacimiento;
+  late String lugarResidencia;
+  late String edad;
+  late String sexo;
+  late String celular;
+  late String email;
+  late String password;
 
   @override
   Widget build(BuildContext context) {
+    _futurePaciente = obtenerPaciente();
     return Scaffold(
       body: Padding(
           padding: const EdgeInsets.fromLTRB(3, 35, 3, 25),
@@ -30,7 +43,27 @@ class _DermatologicalProfile extends State<DermatologicalProfile> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ScreenHeader(title: 'Perfil dermatológico',),
-                  formUI(),
+                FutureBuilder<Paciente>(
+                    future: _futurePaciente,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        nombre = snapshot.data!.nombres;
+                        apellido = snapshot.data!.apellidos;
+                        fecha = snapshot.data!.fechaNacimiento;
+                        lugarNacimiento = snapshot.data!.lugarNacimiento;
+                        lugarResidencia = snapshot.data!.lugarResidencia;
+                        edad = snapshot.data!.edad;
+                        sexo = snapshot.data!.sexo;
+                        celular = (snapshot.data!.numeroCelular).toString();
+                        email = snapshot.data!.correo;
+                        password = snapshot.data!.clave;
+                        return formUI();
+                      } else if (snapshot.hasError) {
+                        return Text('${snapshot.error}');
+                      }
+                      return const CircularProgressIndicator();
+                    },
+                  ),
                 ],
               ),
             ),
@@ -100,13 +133,6 @@ class _DermatologicalProfile extends State<DermatologicalProfile> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            /*itemCheckbox(profile1),
-            itemCheckbox(profile2),
-            itemCheckbox(profile3),
-            itemCheckbox(profile4),
-            itemCheckbox(profile5),
-            itemCheckbox(profile6),*/
-
             SimpleGroupedCheckbox<int>(
               controller: controller,
               itemsTitle: [profile1, profile2, profile3, profile4, profile5, profile6],
@@ -160,36 +186,28 @@ class _DermatologicalProfile extends State<DermatologicalProfile> {
       );
   }
 
+  perfilDermatologico(perfil){
+    switch(perfil) {
+      case 1: {  return "FOTOTIPO I"; }
+      case 2: {  return "FOTOTIPO II"; }
+      case 3: {  return "FOTOTIPO III"; }
+      case 4: {  return "FOTOTIPO IV"; }
+      case 5: {  return "FOTOTIPO V"; }
+      default: { return "FOTOTIPO VI"; }
+    }
+  }
+
   void save() {
     print(controller.selectedItem);
-    print(url);
-    /*_futurePaciente = createPaciente(
-        nombreCtrl.text,
-        apellidoCtrl.text,
-        fechaNacimientoCtrl.text,
-        lugarNacimientoCtrl.text,
-        lugarResidenciaCtrl.text,
-        edadCtrl.text,
-        sexoCtrl.text,
-        celularCtrl.text,
-        emailCtrl.text,
-        passwordCtrl.text
+    print(urlPut);
+    _futurePaciente = updatePacienteForm(
+        nombre, apellido, fecha, lugarNacimiento, lugarResidencia, edad,
+        sexo, celular, email, password, perfilDermatologico(controller.selectedItem)
     );
 
     if (_futurePaciente != null) {
-      _showAlertDialog("Registrar usuario", "Usuario registrado con exito");
-      nombreCtrl.clear();
-      apellidoCtrl.clear();
-      fechaNacimientoCtrl.clear();
-      lugarNacimientoCtrl.clear();
-      lugarResidenciaCtrl.clear();
-      edadCtrl.clear();
-      sexoCtrl.clear();
-      celularCtrl.clear();
-      emailCtrl.clear();
-      passwordCtrl.clear();
-      repeatPasswordCtrl.clear();
-    }*/
+      _showAlertDialog("Perfil dermatológico", "Perfil dermatológico registrado");
+    }
   }
 
   FutureBuilder<Paciente> buildFutureBuilder() {
@@ -216,7 +234,7 @@ class _DermatologicalProfile extends State<DermatologicalProfile> {
             actions: <Widget>[
               ElevatedButton(
                 child: Text("CERRAR", style: TextStyle(color: Colors.white),),
-                onPressed: (){ Navigator.of(context).pop(); },
+                onPressed: (){ Navigator.pushNamed(context, '/') ;},
               )
             ],
           );
