@@ -1,4 +1,5 @@
 import 'package:dermosolution_app/src/features/configuration/service/service_profile.dart';
+import 'package:dermosolution_app/src/features/login/presentation/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import '../user_profile/presentation/widgets/header.dart';
 import 'package:dermosolution_app/src/features/user_profile/domain/models/patient_profile.dart';
@@ -246,7 +247,6 @@ class _Configuration extends State<Configuration> {
   }
 
   controlButtons(){
-    double screenWidth = MediaQuery.of(context).size.width;
     return Padding(
         padding: const EdgeInsets.fromLTRB(3, 25, 3, 3),
         child: Row(
@@ -269,7 +269,7 @@ class _Configuration extends State<Configuration> {
                 style: ElevatedButton.styleFrom(
                     backgroundColor: const Color.fromRGBO(239, 92, 92, 1.0)),
                 onPressed: () {
-                  Navigator.pop(context);
+                  Navigator.pushNamed(context, '/');
                 },
                 child: const Text("Rechazar"),
               ),
@@ -323,7 +323,7 @@ class _Configuration extends State<Configuration> {
   }
 
   void save() {
-    _futurePaciente = createPacienteForm(
+    _futurePaciente = updatePacienteForm(
         nombreCtrl.text,
         apellidoCtrl.text,
         fechaNacimientoCtrl.text,
@@ -337,22 +337,12 @@ class _Configuration extends State<Configuration> {
     );
 
     if (_futurePaciente != null) {
-      _showAlertDialog("Registrar usuario", "Usuario registrado con exito");
-      nombreCtrl.clear();
-      apellidoCtrl.clear();
-      fechaNacimientoCtrl.clear();
-      lugarNacimientoCtrl.clear();
-      lugarResidenciaCtrl.clear();
-      edadCtrl.clear();
-      sexoCtrl.clear();
-      celularCtrl.clear();
-      emailCtrl.clear();
-      passwordCtrl.clear();
-      repeatPasswordCtrl.clear();
+      _showAlertDialog("Actualizar usuario", "Usuario actualizado con exito");
+      print(nombreCtrl.text);
     }
   }
 
-  /*FutureBuilder<Paciente> buildFutureBuilder() {
+  FutureBuilder<Paciente> buildFutureBuilder() {
     return FutureBuilder<Paciente>(
       future: _futurePaciente,
       builder: (context, snapshot) {
@@ -364,7 +354,7 @@ class _Configuration extends State<Configuration> {
         return const CircularProgressIndicator();
       },
     );
-  }*/
+  }
 
 
 
@@ -379,7 +369,9 @@ class _Configuration extends State<Configuration> {
             actions: <Widget>[
               ElevatedButton(
                 child: Text("CERRAR", style: TextStyle(color: Colors.white),),
-                onPressed: (){ Navigator.of(context).pop(); },
+                onPressed: (){
+                  Navigator.pushNamed(context, '/');
+                },
               )
             ],
           );

@@ -5,7 +5,8 @@ import 'package:http/http.dart' as http;
 import 'package:dermosolution_app/src/features/user_profile/domain/models/patient_profile.dart';
 
 String url = "$baseUrl/pacientes/";
-String urlGet = "$baseUrl/pacientes/2";
+String urlGet = "$baseUrl/pacientes/1";
+String urlPut = "$baseUrl/pacientes/1/";
 
 Future<Paciente> createPacienteForm(String nombres, String apellidos, String fechaNacimiento,
     String lugarNacimiento, String lugarResidencia,  String edad, String sexo,
@@ -42,7 +43,6 @@ Future<Paciente> obtenerPaciente() async {
 
   final pacienteGet = await http.get(Uri.parse(urlGet));
 
-
   if (pacienteGet.statusCode == 200) {
     return Paciente.fromJson(jsonDecode(pacienteGet.body));
   }else {
@@ -50,3 +50,33 @@ Future<Paciente> obtenerPaciente() async {
   }
 }
 
+Future<Paciente> updatePacienteForm(String nombres, String apellidos, String fechaNacimiento,
+    String lugarNacimiento, String lugarResidencia,  String edad, String sexo,
+    String numeroCelular, String correo, String clave) async {
+
+  final pacientePut = await http.put(
+    Uri.parse(urlPut),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(<String, Object>{
+      'nombres': nombres,
+      'apellidos': apellidos,
+      'fecha_nacimiento': fechaNacimiento,
+      'lugar_nacimiento': lugarNacimiento,
+      'lugar_residencia': lugarResidencia,
+      'numero_celular': numeroCelular,
+      'correo': correo,
+      'clave': clave,
+      'edad': edad,
+      'sexo': sexo,
+      'casos_medicos': []
+    }),
+  );
+
+  if (pacientePut.statusCode == 200) {
+    return Paciente.fromJson(jsonDecode(pacientePut.body));
+  }else {
+    throw Exception('Error en la actualización del paciente');
+  }
+}

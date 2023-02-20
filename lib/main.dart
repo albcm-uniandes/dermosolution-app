@@ -27,6 +27,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+      routes: {
+        'Login': (context) => const LoginScreen(),
+      },
       home: const MyHomePage(title: 'Dermosolution APP'),
     );
   }
