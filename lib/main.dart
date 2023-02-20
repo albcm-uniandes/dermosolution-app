@@ -1,4 +1,5 @@
 import 'package:dermosolution_app/src/features/configuration/form_configuration.dart';
+import 'package:dermosolution_app/src/features/dermatological%20profile/dermatological_profile.dart';
 import 'package:dermosolution_app/src/features/login/presentation/screens/login_screen.dart';
 import 'package:dermosolution_app/src/features/medical_case/presentation/screens/case_creation_screen.dart';
 import 'package:dermosolution_app/src/features/user_profile/formulario.dart';
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       routes: {
-        'Login': (context) => const LoginScreen(),
+        'perfil_dermatologico': (context) => const DermatologicalProfile(),
       },
       home: const MyHomePage(title: 'Dermosolution APP'),
     );
