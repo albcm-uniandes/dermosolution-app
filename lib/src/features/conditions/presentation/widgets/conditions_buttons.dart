@@ -2,7 +2,9 @@ import 'package:dermosolution_app/src/features/user_profile/presentation/screens
 import 'package:flutter/material.dart';
 
 class ConditionsButtons extends StatefulWidget {
-  const ConditionsButtons({super.key, required this.acceptCallback, required this.rejectCallback});
+  const ConditionsButtons(
+      {super.key, required this.acceptCallback, required this.rejectCallback});
+
   final VoidCallback acceptCallback;
   final VoidCallback rejectCallback;
 

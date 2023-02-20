@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 class FieldCreateCaseWidget extends StatefulWidget {
   const FieldCreateCaseWidget(
-      {super.key, required this.dropList, required this.fieldName});
+      {super.key, required this.dropList, required this.fieldName, required this.onChanges});
 
+  final Function onChanges;
   final List<String> dropList;
   final String fieldName;
 
@@ -35,9 +36,13 @@ class _FieldCreateCaseWidgetState extends State<FieldCreateCaseWidget> {
             style: const TextStyle(
                 fontSize: 12, fontFamily: 'Comfortaa', color: Colors.black),
             onChanged: (String? value) {
-              setState(() {dropdownValue = value!;});
-              },
-            items: widget.dropList.map<DropdownMenuItem<String>>((String value) {
+              setState(() {
+                dropdownValue = value!;
+              });
+              widget.onChanges(dropdownValue);
+            },
+            items: widget.dropList.map<DropdownMenuItem<String>>((
+                String value) {
               return DropdownMenuItem<String>(
                 value: value,
                 child: Text(value),
