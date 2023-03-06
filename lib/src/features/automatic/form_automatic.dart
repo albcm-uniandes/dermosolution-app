@@ -43,7 +43,7 @@ class _AutomaticDiagnostic extends State<AutomaticDiagnostic> {
                     future: _futureAutomatico,
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
-                        casoCtrl.text = snapshot.data!.caso.toString();
+                        casoCtrl.text = snapshot.data!.id.toString();
                         fechaDiagnosticoCtrl.text = snapshot.data!.fecha_diagnostico;
                         diagnosticoCtrl.text = snapshot.data!.diagnostico;
                         nombreMedicoCtrl.text = snapshot.data!.nombre_medico;
@@ -71,7 +71,7 @@ class _AutomaticDiagnostic extends State<AutomaticDiagnostic> {
   itemsFormText(fieldName, controller){
     double screenWidth = MediaQuery.of(context).size.width;
     return Padding(
-      padding: const EdgeInsets.fromLTRB(2, 3, 2, 8),
+      padding: const EdgeInsets.fromLTRB(2, 3, 2, 3),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -93,7 +93,7 @@ class _AutomaticDiagnostic extends State<AutomaticDiagnostic> {
             height: 35,
             child: TextFormField(
               style: const TextStyle(
-                fontSize: 12,
+                fontSize: 14,
                 fontFamily: 'Comfortaa',
                 fontWeight: FontWeight.bold,
               ),
@@ -119,7 +119,7 @@ class _AutomaticDiagnostic extends State<AutomaticDiagnostic> {
         children: [
           SizedBox(
             width: screenWidth * 0.22,
-            height: 35,
+            height:35,
             child:Text(
               fieldName,
               //overflow: TextOverflow.visible,
@@ -133,17 +133,20 @@ class _AutomaticDiagnostic extends State<AutomaticDiagnostic> {
           SizedBox(
             width: screenWidth * 0.63,
             height: 80,
-            child: TextFormField(
+            child: TextField(
               style: const TextStyle(
-                fontSize: 12,
+                fontSize: 14,
                 fontFamily: 'Comfortaa',
                 fontWeight: FontWeight.bold,
               ),
               controller: controller,
               readOnly: true,
+              maxLines: 10,
+
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 hintText: fieldName,
+                isDense: true,
               ),
             ),
           )
