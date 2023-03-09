@@ -24,7 +24,7 @@ class LoginFormWidget extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const HomeScreen()));
+                          builder: (context) => const MyHomePage(title: 'Dermosolution APP')));
                 },
                 child: const Text("Ingresar"),
               ),
