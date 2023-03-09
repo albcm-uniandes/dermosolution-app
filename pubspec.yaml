@@ -24,8 +24,10 @@ dependencies:
     sdk: flutter
   camera:
   path_provider:
+  flutter_dotenv: ^5.0.2
   path:
   provider:
+  simple_s3: ^0.3.2
   body_part_selector: ^0.0.3
   image_picker: ^0.8.6+1
   flutter_localizations:
@@ -53,6 +55,7 @@ flutter:
   generate: true
   assets:
     - lib/assets/images/
+    - .env
   fonts:
     - family: Comfortaa
       fonts:

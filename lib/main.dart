@@ -2,12 +2,13 @@ import 'package:dermosolution_app/src/features/configuration/form_configuration.
 import 'package:dermosolution_app/src/features/dermatological%20profile/dermatological_profile.dart';
 import 'package:dermosolution_app/src/features/login/presentation/screens/login_screen.dart';
 import 'package:dermosolution_app/src/features/medical_case/presentation/screens/case_creation_screen.dart';
-import 'package:dermosolution_app/src/features/user_profile/formulario.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-void main() {
+Future<void> main()  async{
+  await dotenv.load();
   runApp(const MyApp());
 }
 

@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import '../../../../medical_case/domain/models/medical_case.dart';
+import '../../domain/models/medical_case.dart';
 import 'case_widget.dart';
 
 class CasesList extends StatefulWidget {
