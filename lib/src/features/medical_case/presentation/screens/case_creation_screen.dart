@@ -25,7 +25,8 @@ class _CaseCreationScreenState extends State<CaseCreationScreen> {
   final List<File?> images = [];
 
   late bool loading = false;
-  late dynamic body = '';
+  late Map<String, dynamic> body = {};
+
   late dynamic formInfo = '';
 
   Future pickImage(ImageSource source) async {
@@ -34,9 +35,7 @@ class _CaseCreationScreenState extends State<CaseCreationScreen> {
       if (image == null) return;
       final imageTemp = File(image.path);
       setState(() => images.add(imageTemp));
-    } on PlatformException catch (e) {
-      print('Failed to pick image: $e');
-    }
+    } on PlatformException catch (e) {}
   }
 
   void initState() {
@@ -57,17 +56,33 @@ class _CaseCreationScreenState extends State<CaseCreationScreen> {
 
   Future<void> uploadPhotos() async {
     SimpleS3 _simpleS3 = SimpleS3();
+    var wait;
     setState(() {
       loading = true;
     });
-    images.forEach((element) async {
-      await _simpleS3.uploadFile(element!, 'dermosolutionsweb',
+    images.forEach((element) {
+        wait = _simpleS3.uploadFile(element!, 'dermosolutionsweb',
           'us-east-1:cfc6da9c-7723-4c6b-8111-05721308c8a6', AWSRegions.usEast1,
           debugLog: true, s3FolderPath: "evidencias-casos");
     });
-    setState(() {
-      loading = false;
+    await wait;
+     setState(() {
+       loading = false;
     });
+  }
+
+  List<Widget> activeParts(Map<String, dynamic> json) {
+    List<Widget> widgets = [];
+    if (json == null) {
+      widgets.add(Text('Ninguna parte seleccionada '));
+    } else {
+      for (var element in json.entries) {
+        if (element.value == true) {
+          widgets.add(Text(element.key));
+        }
+      }
+    }
+    return widgets;
   }
 
   @override
@@ -90,7 +105,7 @@ class _CaseCreationScreenState extends State<CaseCreationScreen> {
                             formInfo = value;
                           });
                         }),
-                        const Text('Anexar Evicencia',
+                        const Text('Anexar Evidencia',
                             style: TextStyle(
                               fontSize: 16,
                               fontFamily: 'Comfortaa',
@@ -117,22 +132,26 @@ class _CaseCreationScreenState extends State<CaseCreationScreen> {
                           children: <Widget>[
                             CarouselSlider(
                               options: CarouselOptions(
-                                aspectRatio: 2.0,
-                                enlargeCenterPage: true,
-                                enlargeStrategy:
-                                    CenterPageEnlargeStrategy.height,
-                                enableInfiniteScroll: false
-                              ),
+                                  aspectRatio: 2.0,
+                                  enlargeCenterPage: true,
+                                  enlargeStrategy:
+                                      CenterPageEnlargeStrategy.height,
+                                  enableInfiniteScroll: false),
                               items: images.isNotEmpty
-                                  ? images.map((e) => Container(
-                                  width: MediaQuery.of(context)
-                                      .size
-                                      .width,
-                                  margin: const EdgeInsets.symmetric(
-                                      horizontal: 5.0),
-                                  decoration: const BoxDecoration(
-                                      color: Colors.black),
-                                  child: Image.file(e!, width: 1000, height: 100,))).toList()
+                                  ? images
+                                      .map((e) => Container(
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          margin: const EdgeInsets.symmetric(
+                                              horizontal: 5.0),
+                                          decoration: const BoxDecoration(
+                                              color: Colors.black),
+                                          child: Image.file(
+                                            e!,
+                                            width: 1000,
+                                            height: 100,
+                                          )))
+                                      .toList()
                                   : [
                                       Image.network(
                                         'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png',
@@ -142,6 +161,9 @@ class _CaseCreationScreenState extends State<CaseCreationScreen> {
                                     ],
                             )
                           ],
+                        ),
+                        Column(
+                          children: activeParts(body!),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -166,7 +188,6 @@ class _CaseCreationScreenState extends State<CaseCreationScreen> {
                             ),
                           ),
                         ),
-                        // Todo: show feedback about parts selected
                         ConditionsButtons(
                             acceptCallback: () async {
                               if (images.isEmpty || body == null) {
@@ -180,12 +201,14 @@ class _CaseCreationScreenState extends State<CaseCreationScreen> {
                                 );
                               } else {
                                 await uploadPhotos();
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const CasesScreen()),
-                                );
+                                if (!loading) {
+                                  await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                        const CasesScreen()),
+                                  );
+                                }
                               }
                             },
                             rejectCallback: () {})
