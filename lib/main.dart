@@ -8,8 +8,13 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 Future<void> main()  async{
-  await dotenv.load();
-  runApp(const MyApp());
+  try{
+    await dotenv.load();
+  } on Error catch(_){
+    print(_);
+  }
+    runApp(const MyApp());
+
 }
 
 class MyApp extends StatelessWidget {
