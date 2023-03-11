@@ -1,3 +1,4 @@
+import 'package:dermosolution_app/src/features/automatic/form_automatic.dart';
 import 'package:dermosolution_app/src/features/configuration/form_configuration.dart';
 import 'package:dermosolution_app/src/features/dermatological%20profile/dermatological_profile.dart';
 import 'package:dermosolution_app/src/features/login/presentation/screens/login_screen.dart';
