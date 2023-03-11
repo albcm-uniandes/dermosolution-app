@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../conditions/presentation/screens/conditions_screen.dart';
-import '../../../home/ui/screens/home.dart';
+import '../../../medical_case/presentation/screens/cases_list_screen.dart';
 
 class LoginFormWidget extends StatelessWidget {
   const LoginFormWidget({super.key});
@@ -24,7 +24,7 @@ class LoginFormWidget extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const HomeScreen()));
+                          builder: (context) => const CasesScreen()));
                 },
                 child: const Text("Ingresar"),
               ),
