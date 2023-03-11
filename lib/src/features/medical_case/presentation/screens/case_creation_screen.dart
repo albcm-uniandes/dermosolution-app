@@ -262,7 +262,9 @@ class _CaseCreationScreenState extends State<CaseCreationScreen> {
                                 }
                               }
                             },
-                            rejectCallback: () {})
+                            rejectCallback: () {
+                              Navigator.pushNamed(context, '/');
+                            })
                       ],
                     ),
                   )
