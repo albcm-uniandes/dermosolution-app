@@ -25,7 +25,7 @@ class _CaseScreenState extends State<CaseScreen> {
   TextEditingController  distribucionCtrl = TextEditingController();
   TextEditingController  colorCtrl = TextEditingController();
 
-  final List<String?> images = [];
+  final List<dynamic?> images = [];
   late bool loading = false;
   late Map<String, dynamic> body = {};
 
@@ -54,7 +54,7 @@ class _CaseScreenState extends State<CaseScreen> {
                         numeroCtrl.text = caseInfo.quantity;
                         distribucionCtrl.text = caseInfo.distribution;
                         colorCtrl.text = caseInfo.color;
-                        return formUI();
+                        return formUI(caseInfo.images);
                       } else if (snapshot.hasError) {
                         return Text('${snapshot.error}');
                       }
@@ -69,10 +69,10 @@ class _CaseScreenState extends State<CaseScreen> {
     );
   }
 
-  carrusel(){
+  carrusel(List<dynamic> images){
     return CarouselSlider(
       options: CarouselOptions(
-          aspectRatio: 2.0,
+          aspectRatio: 1.0,
           enlargeCenterPage: true,
           enlargeStrategy:
           CenterPageEnlargeStrategy.height,
@@ -85,21 +85,18 @@ class _CaseScreenState extends State<CaseScreen> {
                 margin: const EdgeInsets.symmetric(horizontal: 5.0),
                 decoration: const BoxDecoration(color: Colors.black),
                 child: Image.network(
-                  e!,
+                  e,
                   fit: BoxFit.cover,
                   width: 1000,
                 )
-                /*child: Image.file(
-                  e!,
-                  width: 1000,
-                  height: 100,
-                )*/
               )
             ).toList():[
             Image.network(
               'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png',
               fit: BoxFit.cover,
-              width: 1000,
+              //fit:BoxFit.fill,
+              width: 320,
+              height: 192,
             )
             ],
     );
@@ -151,7 +148,7 @@ class _CaseScreenState extends State<CaseScreen> {
   
   itemsTitle (title) {
     return Padding(
-      padding: const EdgeInsets.only(top: 10, left: 35),
+      padding: const EdgeInsets.only(top: 10, left: 35, bottom: 10),
       child: Row(
         //mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -166,7 +163,7 @@ class _CaseScreenState extends State<CaseScreen> {
     );
   }
 
-  Widget formUI() {
+  Widget formUI(List<dynamic> images) {
     return  Padding(
       padding: const EdgeInsets.fromLTRB(18, 18, 18, 18),
       child: Scrollbar(
@@ -184,7 +181,7 @@ class _CaseScreenState extends State<CaseScreen> {
             itemsFormText("Distribución", distribucionCtrl),
             itemsFormText("Color", colorCtrl),
             itemsTitle("Evidencias"),
-            carrusel(),
+            carrusel(images),
             controlButtons(),
           ],
         ),
