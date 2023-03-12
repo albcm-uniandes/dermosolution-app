@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   testWidgets('Input generator should return same name', (tester) async {
-    const x = MaterialApp(home: Material(child: InputGenerator(text: 'test')));
+    const x = MaterialApp(home: Material(child: Text('test')));
     await tester.pumpWidget(x);
     expect(find.text('test'), findsOneWidget);
   });

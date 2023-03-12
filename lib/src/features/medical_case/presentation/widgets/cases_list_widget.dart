@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,8 +18,12 @@ class _CasesListState extends State<CasesList> {
   Future<List<MedicalCase>> casesFuture = getCases();
 
   static Future<List<MedicalCase>> getCases() async {
-    const url =
-        'https://dermosbkend.onrender.com/api/v1/pacientes/1/casos-medicos/';
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    var pacientePreference =  prefs.getInt('pacienteId').toString();
+    await pacientePreference;
+    final url =
+        'https://dermosbkend.onrender.com/api/v1/pacientes/${pacientePreference}/casos-medicos/';
+    print(url);
     final response = await http.get(Uri.parse(url));
     final body = json.decode(response.body);
     return body.map<MedicalCase>(MedicalCase.fromJson).toList();
