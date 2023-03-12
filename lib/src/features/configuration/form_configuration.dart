@@ -1,6 +1,7 @@
 import 'package:dermosolution_app/src/features/configuration/service/service_profile.dart';
 import 'package:dermosolution_app/src/features/login/presentation/screens/login_screen.dart';
 import 'package:flutter/material.dart';
+import '../home/screens/home.dart';
 import '../user_profile/presentation/widgets/header.dart';
 import 'package:dermosolution_app/src/features/user_profile/domain/models/patient_profile.dart';
 import 'package:dermosolution_app/src/features/user_profile/service/service_profile.dart';
@@ -269,7 +270,10 @@ class _Configuration extends State<Configuration> {
                 style: ElevatedButton.styleFrom(
                     backgroundColor: const Color.fromRGBO(239, 92, 92, 1.0)),
                 onPressed: () {
-                  Navigator.pushNamed(context, '/');
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const MyHomePage(title: 'Dermosolution',)));;
                 },
                 child: const Text("Rechazar"),
               ),
@@ -370,7 +374,10 @@ class _Configuration extends State<Configuration> {
               ElevatedButton(
                 child: Text("CERRAR", style: TextStyle(color: Colors.white),),
                 onPressed: (){
-                  Navigator.pushNamed(context, '/');
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const MyHomePage(title: 'Dermosolution',)));
                 },
               )
             ],
