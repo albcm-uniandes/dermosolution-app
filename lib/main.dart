@@ -1,5 +1,5 @@
 import 'package:dermosolution_app/src/features/configuration/form_configuration.dart';
-import 'package:dermosolution_app/src/features/dermatological%20profile/dermatological_profile.dart';
+import 'package:dermosolution_app/src/features/dermatological_profile/dermatological_profile.dart';
 import 'package:dermosolution_app/src/features/login/presentation/screens/login_screen.dart';
 import 'package:dermosolution_app/src/features/medical_case/presentation/screens/case_creation_screen.dart';
 import 'package:flutter/material.dart';
