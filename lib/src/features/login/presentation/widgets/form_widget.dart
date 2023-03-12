@@ -42,12 +42,12 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
       body: jsonEncode(<String, Object>{'username': email, 'password': clave}),
     );
     if (pacientePost.statusCode == 200) {
-      var body = Paciente.fromJson(jsonDecode(pacientePost.body));
       setState(() {
         logged = true;
       });
-      prefs.setString('pacienteId', jsonDecode(pacientePost.body)['id']);
+      prefs.setInt('pacienteId', jsonDecode(pacientePost.body)['id']);
       prefs.setString('token', jsonDecode(pacientePost.body)['token']);
+
     } else {
       setState(() {
         logged = false;
@@ -77,9 +77,15 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
         children: [
           Padding(
             padding: const EdgeInsets.all(6.0),
-            child: TextField(
+            child: TextFormField(
               controller: emailController,
               obscureText: false,
+              validator: (val){
+                if(val == null)
+                  print('Enter valid input');
+                else
+                  print(val);
+              },
               decoration: InputDecoration(
                 border: const OutlineInputBorder(),
                 labelText: "Correo electronico",
