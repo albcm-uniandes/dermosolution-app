@@ -83,7 +83,9 @@ class _CaseScreenState extends State<CaseScreen> {
               Container(
                 width: MediaQuery.of(context).size.width,
                 margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                decoration: const BoxDecoration(color: Colors.black),
+                decoration: const BoxDecoration(
+                  color: Colors.black
+                ),
                 child: Image.network(
                   e,
                   fit: BoxFit.cover,
@@ -93,10 +95,8 @@ class _CaseScreenState extends State<CaseScreen> {
             ).toList():[
             Image.network(
               'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png',
-              fit: BoxFit.cover,
-              //fit:BoxFit.fill,
-              width: 320,
-              height: 192,
+              fit:BoxFit.fitWidth,
+              width: 320
             )
             ],
     );
@@ -148,7 +148,7 @@ class _CaseScreenState extends State<CaseScreen> {
   
   itemsTitle (title) {
     return Padding(
-      padding: const EdgeInsets.only(top: 10, left: 35, bottom: 10),
+      padding: const EdgeInsets.only(top: 10, left: 35, bottom: 5),
       child: Row(
         //mainAxisAlignment: MainAxisAlignment.start,
         children: [

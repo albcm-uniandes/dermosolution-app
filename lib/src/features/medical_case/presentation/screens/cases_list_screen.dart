@@ -1,6 +1,6 @@
 import 'package:dermosolution_app/src/features/conditions/presentation/widgets/header.dart';
 import 'package:dermosolution_app/src/features/medical_case/presentation/widgets/cases_list_widget.dart';
-import 'package:dermosolution_app/src/shared/widgets/logo.dart';
+import 'package:dermosolution_app/src/features/medical_case/presentation/widgets/control_buttons_case.dart';
 import 'package:flutter/material.dart';
 
 class CasesScreen extends StatelessWidget {
@@ -9,9 +9,10 @@ class CasesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(children: const [
+      body: Column(children: [
         ScreenHeader(title: 'Listado de casos'),
-        CasesList()
+        CasesList(),
+        CaseButtons(),
       ]),
     );
   }
