@@ -1,5 +1,4 @@
 import 'package:dermosolution_app/src/features/automatic/service/service_automatic.dart';
-import 'package:dermosolution_app/src/features/configuration/service/service_profile.dart';
 import 'package:flutter/material.dart';
 import '../user_profile/presentation/widgets/header.dart';
 import 'domain/models/case_profile.dart';
@@ -38,7 +37,6 @@ class _AutomaticDiagnostic extends State<AutomaticDiagnostic> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ScreenHeader(title: 'Diagnostico Automatico',),
-                  /*formUI(),*/
                   FutureBuilder<Automatico>(
                     future: _futureAutomatico,
                     builder: (context, snapshot) {

@@ -1,10 +1,10 @@
 import 'package:dermosolution_app/src/features/automatic/form_automatic.dart';
 import 'package:dermosolution_app/src/features/configuration/form_configuration.dart';
 import 'package:dermosolution_app/src/features/dermatological%20profile/dermatological_profile.dart';
+import 'package:dermosolution_app/src/features/info_case/presentation/screens/case_screen.dart';
 import 'package:dermosolution_app/src/features/login/presentation/screens/login_screen.dart';
 import 'package:dermosolution_app/src/features/medical_case/presentation/screens/case_creation_screen.dart';
 import 'package:dermosolution_app/src/features/monitoring_comments/comments.dart';
-import 'package:dermosolution_app/src/features/monitoring_comments/monitoring.dart';
 import 'package:dermosolution_app/src/features/user_profile/formulario.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -62,9 +62,11 @@ class _MyHomePageState extends State<MyHomePage> {
   static const List<Widget> _widgetOptions = <Widget>[
     LoginScreen(), // Todo. Hide app bar in login screen
     //CaseCreationScreen(),
-    //Comments(),
-    AutomaticDiagnostic(),
-    Configuration(),
+
+    //AutomaticDiagnostic(),
+    CaseScreen(caseId: '0'),
+    //Configuration(),
+    Comments(),
   ];
 
   void _onItemTapped(int index) {

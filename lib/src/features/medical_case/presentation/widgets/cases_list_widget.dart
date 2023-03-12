@@ -22,10 +22,6 @@ class _CasesListState extends State<CasesList> {
     final response = await http.get(Uri.parse(url));
     final body = json.decode(response.body);
     return body.map<MedicalCase>(MedicalCase.fromJson).toList();
-    const data = [
-      {"description": "", "status": "", "diagnostic_type": "", "specialist": ""}
-    ];
-    return data.map<MedicalCase>(MedicalCase.fromJson).toList();
   }
 
   Widget buildCases(List<MedicalCase> cases) => ListView.builder(
@@ -33,6 +29,7 @@ class _CasesListState extends State<CasesList> {
       itemBuilder: (context, index) {
         final item = cases[index];
         return Case(
+            id: item.id.toString(),
             description: item.description,
             specialist: item.specialist,
             status: item.status,
