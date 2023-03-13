@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../home/screens/home.dart';
+
 class ConditionsButtons extends StatefulWidget {
   const ConditionsButtons(
       {super.key, required this.acceptCallback, required this.rejectCallback});
@@ -23,7 +25,13 @@ class _ConditionsButtonsState extends State<ConditionsButtons> {
             width: 100,
             height: 30,
             child: ElevatedButton(
-              onPressed: widget.acceptCallback,
+              onPressed: (){
+                //widget.acceptCallback,
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const MyHomePage(title: 'Dermosolution',)));;
+                  },
               child: const Text("Aceptar"),
             ),
           ),

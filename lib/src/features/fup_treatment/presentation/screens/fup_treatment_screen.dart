@@ -11,6 +11,8 @@ import 'package:simple_s3/simple_s3.dart';
 
 import '../../../../shared/constants.dart';
 
+import '../../../home/screens/home.dart';
+
 class FupTreatmentScreen extends StatefulWidget{
   const FupTreatmentScreen({super.key});
 
@@ -119,17 +121,40 @@ class _FupTreatmentScreenState extends State<FupTreatmentScreen> {
                 icon: const Icon(Icons.image),
               )
             ]),
+          controlButtons(),
+        ],
+      ),
+    );
+  }
+
+
+  controlButtons(){
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(3, 25, 3, 3),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
           SizedBox(
-            width: 150,
+              width: 100,
+              height: 30,
+              child: ElevatedButton(
+                onPressed: () async {
+                  crearSeguimiento('1');
+                      },
+                child:  const Text("Anexar evidencia"),
+              )
+          ),
+          SizedBox(
+            width: 100,
             height: 30,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.black),
-              onPressed: () async {
-                crearSeguimiento('1');
-              }, child:  const Text("Anexar evidencia"),
+                  backgroundColor: const Color.fromRGBO(239, 92, 92, 1.0)),
+              onPressed: () {
+                Navigator.pop(context);
+                    },
+              child: const Text("Regresar"),
             ),
-          ),
         ],
       ),
     );

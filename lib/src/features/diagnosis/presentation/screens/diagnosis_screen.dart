@@ -13,6 +13,7 @@ class DiagnosisScreen extends StatefulWidget {
 
   final String casoMedico;
 
+
   @override
   State<DiagnosisScreen> createState() => _DiagnosisScreenState();
 }
@@ -36,6 +37,7 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
 
   Future<String> getDiagnosis(String caso) async {
     final url = '$baseUrl/casos-medicos/$caso';
+    print(url);
     final response = await http.get(Uri.parse(url));
     final body = json.decode(response.body);
     setState(() {
@@ -51,6 +53,7 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print("Este es el caso medico " + widget.casoMedico);
     _futureDiagnosis = getDiagnosis(widget.casoMedico);
     return Scaffold(
       body: Column(
