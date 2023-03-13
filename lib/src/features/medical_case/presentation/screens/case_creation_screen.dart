@@ -127,18 +127,6 @@ class _CaseCreationScreenState extends State<CaseCreationScreen> {
     return widgets;
   }
 
-  void diagnosticoAutomatico(String paciente) async {
-    var medicalCaseRequest = await http.post(
-      Uri.parse('$baseUrl/$paciente/casos-medicos/'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      //todo especificar url
-      body: jsonEncode(<String, dynamic>{
-        '': ''
-      }),
-    );
-  }
   @override
   Widget build(BuildContext context) {
     print(formInfo);
