@@ -22,28 +22,40 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
   bool loading = true;
   late Future<String> _futureDiagnosis;
 
-  Future<http.Response> acceptDiagnosis(String CasoMedico) {
-    final url = '$baseUrl/casos-medicos/$CasoMedico';
-    return http.patch(
-      Uri.parse(url),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, String>{
-        'caso': CasoMedico,
-      }),
-    );
-  }
-
   Future<String> getDiagnosis(String caso) async {
+    String result = '';
     final url = '$baseUrl/casos-medicos/$caso';
+    final url2 = '$baseUrl/diagnosticoExterno/$caso';
     print(url);
-    final response = await http.get(Uri.parse(url));
-    final body = json.decode(response.body);
+    var response = await http.get(Uri.parse(url));
+    var body = json.decode(response.body);
+    try {
+      if (body['diagnosticos'] == []) {
+        print('No encontrado en manuales');
+        response = await http.get(Uri.parse(url2));
+        body = json.decode(response.body);
+        if (body['diagnostico']!=null) {
+          print('Encontrado en automatico');
+          result = body['diagnostico'];
+        }
+        else{
+          print('No encontrado ');
+
+          throw 'No encontrado';
+        }
+      }
+      else{
+        result = body['diagnosticos'][0];
+      }
+    }
+    on Exception catch (e){
+      result = 'No existe diagnostico';
+    }
     setState(() {
       loading = false;
     });
-    return body['diagnosticos'][0];
+    print('Result:'+result);
+    return result;
   }
 
   void initState() {
@@ -53,13 +65,12 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print("Este es el caso medico " + widget.casoMedico);
     _futureDiagnosis = getDiagnosis(widget.casoMedico);
     return Scaffold(
       body: Column(
         children: [
           const ScreenHeader(title: 'Diagnostico'),
-          FutureBuilder<String>(builder: (context, snapshot) {
+          FutureBuilder<String>(future: _futureDiagnosis, builder: (context, snapshot){
             if (snapshot.hasData) {
               return Text(snapshot.toString());
             } else {
