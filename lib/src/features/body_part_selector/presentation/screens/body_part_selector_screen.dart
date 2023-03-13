@@ -14,7 +14,42 @@ class _BodyPartState extends State<BodyPartSelectorScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      body: SizedBox(
+
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 600,
+                width: 700,
+                child: BodyPartSelectorTurnable(
+                  bodyParts: _bodyParts,
+                  onSelectionUpdated: (p) => setState(() => _bodyParts = p),
+                  labelData: const RotationStageLabelData(
+                    front: 'FRONT',
+                    left: 'LEFT',
+                    right: 'RIGHT',
+                    back: 'BACK',
+                  ),
+                ),
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
+                onPressed: () {
+                  Navigator.pop(context, _bodyParts.toJson());
+                },
+                child: const Text("Regresar"),
+              )
+            ],
+          ),
+        ),
+      )
+
+
+      /*Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -40,7 +75,9 @@ class _BodyPartState extends State<BodyPartSelectorScreen> {
             child: const Text("Regresar"),
           )
         ],
-      ),
+      ),*/
+
+
     );
   }
 }

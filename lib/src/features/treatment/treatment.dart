@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../home/screens/home.dart';
 import '../user_profile/presentation/widgets/header.dart';
 
 class Treatment extends StatefulWidget {
@@ -77,7 +78,7 @@ class _Treatment extends State<Treatment> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            itemsFormText("Comentarios", comentariosCtrl),
+            itemsFormText("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sed purus at augue pulvinar efficitur vel sed turpis.", comentariosCtrl),
 
             controlButtons(),
           ],
@@ -97,7 +98,11 @@ class _Treatment extends State<Treatment> {
               height: 30,
               child: ElevatedButton(
                 onPressed: () {
-                  save();
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const MyHomePage(title: 'Dermosolution',)));;
+
                 },
                 child: const Text("Aceptar"),
               )
@@ -109,7 +114,7 @@ class _Treatment extends State<Treatment> {
               style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromRGBO(239, 92, 92, 1.0)),
               onPressed: () {
-                Navigator.pushNamed(context, '/');
+                Navigator.pop(context);
               },
               child: const Text("Rechazar"),
             ),

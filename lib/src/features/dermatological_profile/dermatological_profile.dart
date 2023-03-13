@@ -1,5 +1,5 @@
 import 'package:checkbox_grouped/checkbox_grouped.dart';
-import 'package:dermosolution_app/src/features/dermatological%20profile/service/service_profile.dart';
+import 'package:dermosolution_app/src/features/dermatological_profile/service/service_profile.dart';
 import 'package:flutter/material.dart';
 import '../user_profile/presentation/widgets/header.dart';
 import 'package:dermosolution_app/src/features/user_profile/domain/models/patient_profile.dart';
