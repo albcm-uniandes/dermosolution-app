@@ -3,10 +3,9 @@ import 'dart:convert';
 import 'package:dermosolution_app/src/shared/constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:dermosolution_app/src/features/user_profile/domain/models/patient_profile.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 String url = "$baseUrl/pacientes/";
-String urlGet = "$baseUrl/pacientes/1";
-String urlPut = "$baseUrl/pacientes/1/";
 
 Future<Paciente> createPacienteForm(String nombres, String apellidos, String fechaNacimiento,
     String lugarNacimiento, String lugarResidencia,  String edad, String sexo,
@@ -40,7 +39,10 @@ Future<Paciente> createPacienteForm(String nombres, String apellidos, String fec
 }
 
 Future<Paciente> obtenerPaciente() async {
-
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  var pacientePreference =  prefs.getInt('pacienteId').toString();
+  String urlGet = "$baseUrl/pacientes/$pacientePreference";
+  await pacientePreference;
   final pacienteGet = await http.get(Uri.parse(urlGet));
 
   if (pacienteGet.statusCode == 200) {
@@ -53,9 +55,12 @@ Future<Paciente> obtenerPaciente() async {
 Future<Paciente> updatePacienteForm(String nombres, String apellidos, String fechaNacimiento,
     String lugarNacimiento, String lugarResidencia,  String edad, String sexo,
     String numeroCelular, String correo, String clave) async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  var pacientePreference =  prefs.getInt('pacienteId').toString();
+  String urlPut = "$baseUrl/pacientes/$pacientePreference/";
 
   final pacientePut = await http.put(
-    Uri.parse(urlPut),
+      Uri.parse(urlPut),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
