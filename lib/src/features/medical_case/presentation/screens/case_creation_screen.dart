@@ -1,9 +1,11 @@
 import 'dart:io';
 import 'package:dermosolution_app/src/features/conditions/presentation/widgets/conditions_buttons.dart';
+import 'package:dermosolution_app/src/shared/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../body_part_selector/presentation/screens/body_part_selector_screen.dart';
 import '../../../conditions/presentation/widgets/header.dart';
 import '../widgets/case_info_form.dart';
