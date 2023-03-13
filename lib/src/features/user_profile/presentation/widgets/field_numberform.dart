@@ -10,7 +10,7 @@ class FieldUserNumberWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     return Padding(
-        padding: const EdgeInsets.fromLTRB(3, 3, 3, 3),
+        padding: const EdgeInsets.fromLTRB(3, 5, 3, 5),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -18,6 +18,7 @@ class FieldUserNumberWidget extends StatelessWidget {
               width: screenWidth * 0.85,
               height: 35,
               child: TextFormField(
+                textAlignVertical: TextAlignVertical.center,
                 style: const TextStyle(
                   fontSize: 14,
                   fontFamily: 'Comfortaa',
@@ -26,7 +27,7 @@ class FieldUserNumberWidget extends StatelessWidget {
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  hintText: fieldName,
+                  labelText: fieldName,
                 ),
 
                 onSaved: (String? value) {

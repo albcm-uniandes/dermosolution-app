@@ -59,7 +59,7 @@ Future<Paciente> updatePacienteForm(String nombres, String apellidos, String fec
   var pacientePreference =  prefs.getInt('pacienteId').toString();
   String urlPut = "$baseUrl/pacientes/$pacientePreference/";
 
-  final pacientePut = await http.put(
+  final pacientePut = await http.patch(
       Uri.parse(urlPut),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
@@ -74,8 +74,7 @@ Future<Paciente> updatePacienteForm(String nombres, String apellidos, String fec
       'correo': correo,
       'clave': clave,
       'edad': edad,
-      'sexo': sexo,
-      'casos_medicos': []
+      'sexo': sexo
     }),
   );
 
