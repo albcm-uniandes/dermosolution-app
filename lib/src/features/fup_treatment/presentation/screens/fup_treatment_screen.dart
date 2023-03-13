@@ -5,7 +5,11 @@ import 'package:dermosolution_app/src/features/conditions/presentation/widgets/h
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simple_s3/simple_s3.dart';
+
+import '../../../../shared/constants.dart';
 
 class FupTreatmentScreen extends StatefulWidget{
   const FupTreatmentScreen({super.key});
@@ -32,37 +36,62 @@ class _FupTreatmentScreenState extends State<FupTreatmentScreen> {
     super.initState();
   }
 
-  Future<http.Response> anexarEvidencia(String seguimiento, String url) {
-    var response = http.post(
-      Uri.parse('https://localhost:5000/caso'),
+  Future<http.Response> crearSeguimiento(String tratamiento) async{
+    DateTime now = DateTime.now();
+    String date = DateFormat('yyyy-MM-dd').format(now);
+
+    var response = await http.post(
+      Uri.parse('$baseUrl/seguimientos/'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, String>{
-        'seguimiento': seguimiento,
-        'url': url
+      "tratamiento": tratamiento,
+      "mensaje_paciente": "Prueba",
+      "fecha_msg_paciente": date.toString(),
+      "mensaje_medico": "Prueba",
+      "fecha_msg_medico": date.toString(),
+      "detalle": "Test",
       }),
     );
+    String seguimientoId = jsonDecode(response.body)['id'].toString();
+    var upload = uploadPhotos(seguimientoId);
+    await upload;
     return response;
   }
 
-  Future<void> uploadPhotos() async {
-    // todo: Crear folder y subir archivos
+  Future<void> uploadPhotos(String seguimiento) async {
+    DateTime now = DateTime.now();
+    String date = DateFormat('yyyy-MM-dd').format(now);
+    final String s3_url ='https://dermosolutionsweb.s3.amazonaws.com/seguimientos/';
     SimpleS3 _simpleS3 = SimpleS3();
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
     var wait;
     setState(() {
       loading = true;
     });
-    images.forEach((element) {
+    images.forEach((element) async {
       wait = _simpleS3.uploadFile(element!, 'dermosolutionsweb',
           'us-east-1:cfc6da9c-7723-4c6b-8111-05721308c8a6', AWSRegions.usEast1,
           debugLog: true, s3FolderPath: "seguimientos");
+      await wait;
+      final wait_parsed = wait.substring(wait.toString().lastIndexOf('/') + 1);
+      await http.post(
+        Uri.parse('$baseUrl/imagenesdiagnostica/$seguimiento'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, String>{
+          "seguimiento": seguimiento,
+          "url": s3_url + wait_parsed,
+          "fecha_creacion": date.toString(),
+          "descripcion": "Test",
+        }),
+      );
     });
-    await wait;
     setState(() {
       loading = false;
     });
-    anexarEvidencia('title','');
   }
 
   @override
@@ -71,7 +100,7 @@ class _FupTreatmentScreenState extends State<FupTreatmentScreen> {
       body: Column(
         children: [
           const ScreenHeader(title: 'Seguimiento'),
-          const Text('Texto..'),
+          const Text('Agrega el seguimiento de tu caso con nuevas evidencias'),
           const Center(child: Text('Anexar evidencias'),),
         Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -97,9 +126,8 @@ class _FupTreatmentScreenState extends State<FupTreatmentScreen> {
               style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.black),
               onPressed: () async {
-                uploadPhotos();
-              },
-              child: const Text("Seleccionar partes"),
+                crearSeguimiento('1');
+              }, child:  const Text("Anexar evidencia"),
             ),
           ),
         ],
