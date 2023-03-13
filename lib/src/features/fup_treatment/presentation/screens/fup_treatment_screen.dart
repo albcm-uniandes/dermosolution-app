@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:http/http.dart' as http;
 import 'package:dermosolution_app/src/features/conditions/presentation/widgets/header.dart';
 import 'package:flutter/material.dart';
@@ -99,30 +100,67 @@ class _FupTreatmentScreenState extends State<FupTreatmentScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          const ScreenHeader(title: 'Seguimiento'),
-          const Text('Agrega el seguimiento de tu caso con nuevas evidencias'),
-          const Center(child: Text('Anexar evidencias'),),
-        Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              IconButton(
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            const ScreenHeader(title: 'Seguimiento'),
+            const Text('Agrega el seguimiento de tu caso con nuevas evidencias'),
+            const Center(child: Text('Anexar evidencias'),),
+          Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                IconButton(
+                    iconSize: 70,
+                    onPressed: () {
+                      pickImage(ImageSource.camera);
+                    },
+                    icon: const Icon(Icons.camera_alt_outlined)),
+                IconButton(
                   iconSize: 70,
                   onPressed: () {
-                    pickImage(ImageSource.camera);
+                    pickImage(ImageSource.gallery);
                   },
-                  icon: const Icon(Icons.camera_alt_outlined)),
-              IconButton(
-                iconSize: 70,
-                onPressed: () {
-                  pickImage(ImageSource.gallery);
-                },
-                icon: const Icon(Icons.image),
-              )
-            ]),
-          controlButtons(),
-        ],
+                  icon: const Icon(Icons.image),
+                )
+              ]),
+            Column(
+              children: <Widget>[
+                CarouselSlider(
+                  options: CarouselOptions(
+                      aspectRatio: 2.0,
+                      enlargeCenterPage: true,
+                      enlargeStrategy:
+                      CenterPageEnlargeStrategy.height,
+                      enableInfiniteScroll: false),
+                  items: images.isNotEmpty
+                      ? images
+                      .map((e) => Container(
+                      width:
+                      MediaQuery.of(context).size.width,
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 5.0),
+                      decoration: const BoxDecoration(
+                          color: Colors.black),
+                      child: Image.file(
+                        e!,
+                        width: 1000,
+                        height: 100,
+                      )))
+                      .toList()
+                      : [
+                    Image.network(
+                      'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png',
+                      fit: BoxFit.cover,
+                      width: 1000,
+                    )
+                  ],
+                )
+              ],
+            ),
+            controlButtons(),
+          ],
+        ),
       ),
     );
   }
@@ -135,13 +173,13 @@ class _FupTreatmentScreenState extends State<FupTreatmentScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           SizedBox(
-              width: 100,
+              width: 150,
               height: 30,
               child: ElevatedButton(
                 onPressed: () async {
                   crearSeguimiento('1');
                       },
-                child:  const Text("Anexar evidencia"),
+                child:  Center(child: const Text("Anexar evidencia")),
               )
           ),
           SizedBox(
@@ -155,6 +193,7 @@ class _FupTreatmentScreenState extends State<FupTreatmentScreen> {
                     },
               child: const Text("Regresar"),
             ),
+          )
         ],
       ),
     );
