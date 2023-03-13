@@ -39,14 +39,14 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
     final response = await http.get(Uri.parse(url));
     final body = json.decode(response.body);
     setState(() {
-      loading=false;
+      loading = false;
     });
     return body['diagnosticos'][0];
   }
 
-  void initState(){
+  void initState() {
     super.initState();
-    loading=true;
+    loading = true;
   }
 
   @override
@@ -56,24 +56,18 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
       body: Column(
         children: [
           const ScreenHeader(title: 'Diagnostico'),
-              FutureBuilder<String>(builder: (context, snapshot){
-                  if(snapshot.hasData){
-                    return Text(snapshot.toString());
-                  }else{
-                    if (snapshot==null){
-                      return Text('No hay diagnositco');
-                    }else{
-                      return const CircularProgressIndicator();
-                    }
-                  }
-              }),
-          ConditionsButtons(
-              acceptCallback: () {
-                Navigator.pop(context);
-              },
-              rejectCallback: () {
-                Navigator.pop(context);
-              })
+          FutureBuilder<String>(builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return Text(snapshot.toString());
+            } else {
+              return const CircularProgressIndicator();
+            }
+          }),
+          ConditionsButtons(acceptCallback: () {
+            Navigator.pop(context);
+          }, rejectCallback: () {
+            Navigator.pop(context);
+          })
         ],
       ),
     );
