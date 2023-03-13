@@ -43,7 +43,13 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
     setState(() {
       loading=false;
     });
-    return body['diagnosticos'][0];
+    if (body['diagnosticos'].length == 0){
+      print("No hay diagnostico");
+      return "Sin diagnostico";
+    } else{
+      return body['diagnosticos'][0];
+    }
+
   }
 
   void initState(){
@@ -60,11 +66,12 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
         children: [
           const ScreenHeader(title: 'Diagnostico'),
               FutureBuilder<String>(builder: (context, snapshot){
+                  print("Este es el return " + snapshot.hasData.toString());
                   if(snapshot.hasData){
                     return Text(snapshot.toString());
                   }else{
-                    if (snapshot==null){
-                      return Text('No hay diagnositco');
+                    if (snapshot.hasData == false){
+                      return Text('No hay diagnostico');
                     }else{
                       return const CircularProgressIndicator();
                     }

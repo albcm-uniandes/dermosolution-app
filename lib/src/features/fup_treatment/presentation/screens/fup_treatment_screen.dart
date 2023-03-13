@@ -155,6 +155,7 @@ class _FupTreatmentScreenState extends State<FupTreatmentScreen> {
                     },
               child: const Text("Regresar"),
             ),
+          ),
         ],
       ),
     );
