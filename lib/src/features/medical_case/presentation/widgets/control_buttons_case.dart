@@ -1,4 +1,3 @@
-import 'package:dermosolution_app/main.dart';
 import 'package:flutter/material.dart';
 
 
@@ -8,7 +7,7 @@ class CaseButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(3, 35, 3, 25),
+      padding: const EdgeInsets.fromLTRB(3, 3, 3, 1),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -16,10 +15,13 @@ class CaseButtons extends StatelessWidget {
             width: 100,
             height: 30,
             child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromRGBO(239, 92, 92, 1.0)),
               onPressed: () {
-                Navigator.pop(context);
+                //Navigator.pop(context);
+                Navigator.pushNamed(context, '/');
               },
-              child: Text("Regresar"),
+              child: Text("Salir"),
             ),
           ),
         ],

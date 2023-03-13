@@ -44,7 +44,7 @@ class _CasesListState extends State<CasesList> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        height: 500,
+        height: 310,
         width: 500,
         child: FutureBuilder<List<MedicalCase>>(
           future: casesFuture,
@@ -58,6 +58,8 @@ class _CasesListState extends State<CasesList> {
               return const Text('No cases data.');
             }
           },
-        ));
+        )
+    );
+
   }
 }

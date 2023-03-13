@@ -1,10 +1,14 @@
 import 'package:dermosolution_app/src/features/automatic/service/service_automatic.dart';
 import 'package:flutter/material.dart';
+import '../home/screens/home.dart';
+import '../medical_case/presentation/screens/cases_list_screen.dart';
 import '../user_profile/presentation/widgets/header.dart';
 import 'domain/models/case_profile.dart';
 
 class AutomaticDiagnostic extends StatefulWidget {
-  const AutomaticDiagnostic({super.key});
+  const AutomaticDiagnostic({super.key, required this.caseId});
+
+  final String caseId;
 
   @override
   _AutomaticDiagnostic createState() => _AutomaticDiagnostic();
@@ -30,7 +34,6 @@ class _AutomaticDiagnostic extends State<AutomaticDiagnostic> {
       body: Padding(
           padding: const EdgeInsets.fromLTRB(3, 35, 3, 25),
           child: SizedBox(
-            //child: const ScreenHeader(title: 'Registro de usuario',),
             child: SingleChildScrollView(
               scrollDirection: Axis.vertical,
               child: Column(
@@ -165,7 +168,7 @@ class _AutomaticDiagnostic extends State<AutomaticDiagnostic> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            itemsFormText("Caso", casoCtrl),
+            itemsFormText("Tratamiento", casoCtrl),
             itemsFormText("Fecha Diagnostico", fechaDiagnosticoCtrl),
             itemsFormTextLarge("Diagnostico", diagnosticoCtrl),
             itemsFormText("Nombre Medico", nombreMedicoCtrl),
@@ -193,21 +196,24 @@ class _AutomaticDiagnostic extends State<AutomaticDiagnostic> {
                 child: ElevatedButton(
                   onPressed: () {
                     //save();
-                  },
+                    //Navigator.pop(context);
+                    /*Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                          const CasesScreen()),
+                    );*/
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const MyHomePage(
+                            title: 'Dermosolution',
+                          )
+                         )
+                       );
+                      },
                   child: const Text("Aceptar"),
                 )
-            ),
-            SizedBox(
-              width: 100,
-              height: 30,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromRGBO(239, 92, 92, 1.0)),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/');
-                },
-                child: const Text("Rechazar"),
-              ),
             ),
           ],
         ),

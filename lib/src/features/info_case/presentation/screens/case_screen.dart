@@ -3,6 +3,7 @@ import 'package:dermosolution_app/src/features/info_case/service/service_case.da
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../automatic/form_automatic.dart';
 import '../../../conditions/presentation/widgets/header.dart';
 import '../../domain/models/case.dart';
 
@@ -42,6 +43,7 @@ class _CaseScreenState extends State<CaseScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  backButton(),
                   const ScreenHeader(title: 'Caso Medico'),
                   FutureBuilder<CaseInformation>(
                     future: _futureCaseInformation,
@@ -182,40 +184,68 @@ class _CaseScreenState extends State<CaseScreen> {
             itemsFormText("Color", colorCtrl),
             itemsTitle("Evidencias"),
             carrusel(images),
-            controlButtons(),
+            controlButtons(widget.caseId),
           ],
         ),
       ),
     );
   }
 
-  controlButtons(){
+  controlButtons(caseId){
     return Padding(
       padding: const EdgeInsets.fromLTRB(3, 25, 3, 3),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           SizedBox(
-              width: 100,
+              width: 150,
               height: 30,
               child: ElevatedButton(
                 onPressed: () {
                   //save();
                 },
-                child: const Text("Aceptar"),
+                child: const Text("Ver Diagnostico"),
               )
           ),
           SizedBox(
-            width: 100,
+            width: 150,
             height: 30,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromRGBO(239, 92, 92, 1.0)),
+                  backgroundColor: const Color.fromRGBO(159, 169, 184, 1.0)),
               onPressed: () {
-                Navigator.pop(context);
+                //Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                      AutomaticDiagnostic(caseId: caseId)),
+                );
               },
-              child: const Text("Regresar"),
+              child: const Text("Ver Tratamiento"),
             ),
+          ),
+        ],
+      ),
+    );
+  }
+
+
+  backButton(){
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(1, 1, 0, 0),
+      child: Row(
+        children: [
+          SizedBox(
+              width: 30,
+              height: 30,
+              child: IconButton(
+                icon: const Icon(Icons.arrow_back),
+                color: Colors.blue,
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
           ),
         ],
       ),
