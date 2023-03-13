@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,15 +18,15 @@ class _CasesListState extends State<CasesList> {
   Future<List<MedicalCase>> casesFuture = getCases();
 
   static Future<List<MedicalCase>> getCases() async {
-    const url =
-        'https://dermosbkend.onrender.com/api/v1/pacientes/1/casos-medicos/';
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    var pacientePreference =  prefs.getInt('pacienteId').toString();
+    await pacientePreference;
+    final url =
+        'https://dermosbkend.onrender.com/api/v1/pacientes/${pacientePreference}/casos-medicos/';
+    print(url);
     final response = await http.get(Uri.parse(url));
     final body = json.decode(response.body);
     return body.map<MedicalCase>(MedicalCase.fromJson).toList();
-    const data = [
-      {"description": "", "status": "", "diagnostic_type": "", "specialist": ""}
-    ];
-    return data.map<MedicalCase>(MedicalCase.fromJson).toList();
   }
 
   Widget buildCases(List<MedicalCase> cases) => ListView.builder(
@@ -33,6 +34,7 @@ class _CasesListState extends State<CasesList> {
       itemBuilder: (context, index) {
         final item = cases[index];
         return Case(
+            id: item.id.toString(),
             description: item.description,
             specialist: item.specialist,
             status: item.status,
@@ -42,7 +44,7 @@ class _CasesListState extends State<CasesList> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        height: 500,
+        height: 310,
         width: 500,
         child: FutureBuilder<List<MedicalCase>>(
           future: casesFuture,
@@ -56,6 +58,8 @@ class _CasesListState extends State<CasesList> {
               return const Text('No cases data.');
             }
           },
-        ));
+        )
+    );
+
   }
 }

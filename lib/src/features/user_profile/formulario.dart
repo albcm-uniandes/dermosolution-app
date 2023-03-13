@@ -29,21 +29,11 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    /*return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          const ScreenHeader(title: 'Registro de usuario',),
-          formUI(),
-        ],
-      ),
-    );*/
+
     return Scaffold(
       body: Padding(
           padding: const EdgeInsets.fromLTRB(3, 35, 3, 25),
           child: SizedBox(
-            //child: const ScreenHeader(title: 'Registro de usuario',),
             child: SingleChildScrollView(
               scrollDirection: Axis.vertical,
               child: Column(
@@ -64,12 +54,12 @@ class _RegisterPageState extends State<RegisterPage> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(3, 3, 3, 3),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           SizedBox(
             width: screenWidth * 0.85,
             height: 35,
             child: TextFormField(
+              textAlignVertical: TextAlignVertical.center,
               style: const TextStyle(
                 fontSize: 14,
                 fontFamily: 'Comfortaa',
@@ -79,7 +69,7 @@ class _RegisterPageState extends State<RegisterPage> {
               controller: controller,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
-                hintText: fieldName,
+                labelText: fieldName,
               ),
             ),
           )
@@ -93,12 +83,12 @@ class _RegisterPageState extends State<RegisterPage> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(3, 3, 3, 3),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           SizedBox(
             width: screenWidth * 0.85,
             height: 35,
             child: TextFormField(
+              textAlignVertical: TextAlignVertical.center,
               style: const TextStyle(
                 fontSize: 14,
                 fontFamily: 'Comfortaa',
@@ -113,7 +103,7 @@ class _RegisterPageState extends State<RegisterPage> {
               controller: controller,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
-                hintText: fieldName,
+                labelText: fieldName,
               ),
             ),
           )
@@ -127,12 +117,12 @@ class _RegisterPageState extends State<RegisterPage> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(3, 3, 3, 3),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           SizedBox(
             width: screenWidth * 0.85,
             height: 35,
             child: TextFormField(
+              textAlignVertical: TextAlignVertical.center,
               style: const TextStyle(
                 fontSize: 14,
                 fontFamily: 'Comfortaa',
@@ -142,7 +132,7 @@ class _RegisterPageState extends State<RegisterPage> {
               obscureText: true,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
-                hintText: fieldName,
+                labelText: fieldName,
               ),
             ),
           ),
