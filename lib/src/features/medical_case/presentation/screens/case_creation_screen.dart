@@ -11,6 +11,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:simple_s3/simple_s3.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'cases_list_screen.dart';
 
@@ -23,11 +24,15 @@ class CaseCreationScreen extends StatefulWidget {
 
 class _CaseCreationScreenState extends State<CaseCreationScreen> {
   final List<File?> images = [];
+  static const String paciente = '1';
+  String baseUrl = dotenv.get('baseUrl',
+      fallback: 'https://dermosbkend.onrender.com/api/v1');
+  late int medicalCaseId;
 
   late bool loading = false;
   late Map<String, dynamic> body = {};
 
-  late dynamic formInfo = '';
+  late dynamic formInfo = ['Mácula', 'Anillo', 'Solitaria', 'Confluente', 'Palido',' Diagnostico por especialista'];
 
   Future pickImage(ImageSource source) async {
     try {
@@ -42,33 +47,78 @@ class _CaseCreationScreenState extends State<CaseCreationScreen> {
     super.initState();
   }
 
-  Future<http.Response> createCase(String title) {
-    return http.post(
-      Uri.parse('https://localhost:5000/caso'),
+  Future<http.Response> createCase(List<String> formInfo) async {
+    DateTime now = DateTime.now();
+    String caseId = '';
+    DateTime date = DateTime(now.year, now.month, now.day);
+    var medicalCaseRequest = await http.post(
+      Uri.parse('$baseUrl/pacientes/$paciente/casos-medicos/'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: jsonEncode(<String, String>{
-        'title': title,
+      body: jsonEncode(<String, dynamic>{
+        'descripcion': 'Descripcion base',
+        "estado": "CREADO",
+        "fecha_creación": date.toString(),
+        "paciente": paciente,
+        "medico": null,
+        "tipo": formInfo[0],
+        "forma":formInfo[1],
+        "numero": formInfo[2],
+        "distribucion": formInfo[3],
+        "color": formInfo[4],
+        "diagnosticos": [],
+        "imagenes": []
+      }),
+    );
+    print(medicalCaseRequest);
+    caseId = medicalCaseRequest as String;
+    uploadPhotos(caseId);
+    return medicalCaseRequest;
+  }
+
+  void diagnosticoAutomatico(){
+    var medicalCaseRequest = http.post(
+      Uri.parse('$baseUrl/$paciente/casos-medicos/'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      //todo especificar url
+      body: jsonEncode(<String, dynamic>{
+        '': ''
       }),
     );
   }
 
-  Future<void> uploadPhotos() async {
+  Future<List<String>> uploadPhotos(String caseId) async {
     SimpleS3 _simpleS3 = SimpleS3();
+    List<String> str_urls = [];
     var wait;
     setState(() {
       loading = true;
     });
-    images.forEach((element) {
-        wait = _simpleS3.uploadFile(element!, 'dermosolutionsweb',
+    images.forEach((element) async {
+      wait = _simpleS3.uploadFile(element!, 'dermosolutionsweb',
           'us-east-1:cfc6da9c-7723-4c6b-8111-05721308c8a6', AWSRegions.usEast1,
           debugLog: true, s3FolderPath: "evidencias-casos");
+      await wait;
+      http.post(
+        Uri.parse('$baseUrl/casos-medicos/$caseId/imagenes'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, dynamic>{
+          "caso": "$caseId",
+          "url": "$wait"
+        }),
+      );
+      str_urls.add(wait);
     });
     await wait;
-     setState(() {
-       loading = false;
+    setState(() {
+      loading = false;
     });
+    return str_urls;
   }
 
   List<Widget> activeParts(Map<String, dynamic> json) {
@@ -87,6 +137,7 @@ class _CaseCreationScreenState extends State<CaseCreationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(formInfo);
     return Scaffold(
       body: !loading
           ? SingleChildScrollView(
@@ -200,18 +251,20 @@ class _CaseCreationScreenState extends State<CaseCreationScreen> {
                                   fontSize: 16.0,
                                 );
                               } else {
-                                await uploadPhotos();
+                                await createCase(formInfo);
                                 if (!loading) {
                                   await Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                        const CasesScreen()),
+                                            const CasesScreen()),
                                   );
                                 }
                               }
                             },
-                            rejectCallback: () {})
+                            rejectCallback: () {
+                              Navigator.pushNamed(context, '/');
+                            })
                       ],
                     ),
                   )
