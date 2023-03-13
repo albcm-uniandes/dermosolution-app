@@ -1,7 +1,8 @@
-import 'package:dermosolution_app/src/features/login/data/constants/conditions_constants.dart';
-import 'package:dermosolution_app/src/features/user_profile/formulario.dart';
+
 import 'package:flutter/material.dart';
 
+import '../../../login/data/constants/conditions_constants.dart';
+import '../../../user_profile/formulario.dart';
 import '../../../user_profile/presentation/screens/user_screen.dart';
 import '../widgets/conditions_buttons.dart';
 import '../widgets/header.dart';

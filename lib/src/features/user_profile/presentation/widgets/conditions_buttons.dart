@@ -1,5 +1,5 @@
 import 'package:dermosolution_app/main.dart';
-import 'package:dermosolution_app/src/features/home/ui/screens/home.dart';
+import 'package:dermosolution_app/src/features/medical_case/presentation/screens/cases_list_screen.dart';
 import 'package:dermosolution_app/src/features/user_profile/service/service_profile.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';

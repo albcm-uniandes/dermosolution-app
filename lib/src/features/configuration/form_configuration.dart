@@ -1,9 +1,8 @@
 import 'package:dermosolution_app/src/features/configuration/service/service_profile.dart';
-import 'package:dermosolution_app/src/features/login/presentation/screens/login_screen.dart';
 import 'package:flutter/material.dart';
+import '../home/screens/home.dart';
 import '../user_profile/presentation/widgets/header.dart';
 import 'package:dermosolution_app/src/features/user_profile/domain/models/patient_profile.dart';
-import 'package:dermosolution_app/src/features/user_profile/service/service_profile.dart';
 
 class Configuration extends StatefulWidget {
   const Configuration({super.key});
@@ -76,7 +75,7 @@ class _Configuration extends State<Configuration> {
   itemsFormNumber(fieldName, controller){
     double screenWidth = MediaQuery.of(context).size.width;
     return Padding(
-      padding: const EdgeInsets.fromLTRB(3, 3, 3, 3),
+      padding: const EdgeInsets.fromLTRB(3, 5, 3, 5),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -84,6 +83,7 @@ class _Configuration extends State<Configuration> {
             width: screenWidth * 0.85,
             height: 35,
             child: TextFormField(
+              textAlignVertical: TextAlignVertical.center,
               style: const TextStyle(
                 fontSize: 14,
                 fontFamily: 'Comfortaa',
@@ -93,7 +93,7 @@ class _Configuration extends State<Configuration> {
               controller: controller,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
-                hintText: fieldName,
+                labelText: fieldName,
               ),
             ),
           )
@@ -105,7 +105,7 @@ class _Configuration extends State<Configuration> {
   itemsFormText(fieldName, controller){
     double screenWidth = MediaQuery.of(context).size.width;
     return Padding(
-      padding: const EdgeInsets.fromLTRB(3, 3, 3, 3),
+      padding: const EdgeInsets.fromLTRB(3, 5, 3, 5),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -113,6 +113,7 @@ class _Configuration extends State<Configuration> {
             width: screenWidth * 0.85,
             height: 35,
             child: TextFormField(
+              textAlignVertical: TextAlignVertical.center,
               style: const TextStyle(
                 fontSize: 14,
                 fontFamily: 'Comfortaa',
@@ -121,7 +122,7 @@ class _Configuration extends State<Configuration> {
               controller: controller,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
-                hintText: fieldName,
+                labelText: fieldName,
               ),
             ),
           )
@@ -133,7 +134,7 @@ class _Configuration extends State<Configuration> {
   itemsFormPassword(fieldName, controller){
     double screenWidth = MediaQuery.of(context).size.width;
     return Padding(
-      padding: const EdgeInsets.fromLTRB(3, 3, 3, 3),
+      padding: const EdgeInsets.fromLTRB(3, 5, 3, 5),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -141,6 +142,7 @@ class _Configuration extends State<Configuration> {
             width: screenWidth * 0.85,
             height: 35,
             child: TextFormField(
+              textAlignVertical: TextAlignVertical.center,
               style: const TextStyle(
                 fontSize: 14,
                 fontFamily: 'Comfortaa',
@@ -150,7 +152,7 @@ class _Configuration extends State<Configuration> {
               obscureText: true,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
-                hintText: fieldName,
+                labelText: fieldName,
               ),
             ),
           ),
@@ -165,7 +167,7 @@ class _Configuration extends State<Configuration> {
     String dropdownValue = dropList.first;
     print(dropdownValue);
     return Padding(
-      padding: const EdgeInsets.fromLTRB(3, 3, 3, 3),
+      padding: const EdgeInsets.fromLTRB(3, 5, 3, 5),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -269,7 +271,10 @@ class _Configuration extends State<Configuration> {
                 style: ElevatedButton.styleFrom(
                     backgroundColor: const Color.fromRGBO(239, 92, 92, 1.0)),
                 onPressed: () {
-                  Navigator.pushNamed(context, '/');
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const MyHomePage(title: 'Dermosolution',)));;
                 },
                 child: const Text("Rechazar"),
               ),
@@ -370,7 +375,10 @@ class _Configuration extends State<Configuration> {
               ElevatedButton(
                 child: Text("CERRAR", style: TextStyle(color: Colors.white),),
                 onPressed: (){
-                  Navigator.pushNamed(context, '/');
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const MyHomePage(title: 'Dermosolution',)));
                 },
               )
             ],
