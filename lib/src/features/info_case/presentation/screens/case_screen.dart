@@ -5,6 +5,8 @@ import 'package:flutter/services.dart';
 
 import '../../../automatic/form_automatic.dart';
 import '../../../conditions/presentation/widgets/header.dart';
+import '../../../diagnosis/presentation/screens/diagnosis_screen.dart';
+import '../../../treatment/treatment.dart';
 import '../../domain/models/case.dart';
 
 class CaseScreen extends StatefulWidget {
@@ -202,7 +204,12 @@ class _CaseScreenState extends State<CaseScreen> {
               height: 30,
               child: ElevatedButton(
                 onPressed: () {
-                  //save();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            DiagnosisScreen()),
+                  );
                 },
                 child: const Text("Ver Diagnostico"),
               )
@@ -219,7 +226,7 @@ class _CaseScreenState extends State<CaseScreen> {
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
-                      AutomaticDiagnostic(caseId: caseId)),
+                          Treatment()),
                 );
               },
               child: const Text("Ver Tratamiento"),
