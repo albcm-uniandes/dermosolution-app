@@ -7,6 +7,8 @@ import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:simple_s3/simple_s3.dart';
 
+import '../../../home/screens/home.dart';
+
 class FupTreatmentScreen extends StatefulWidget{
   const FupTreatmentScreen({super.key});
 
@@ -71,7 +73,6 @@ class _FupTreatmentScreenState extends State<FupTreatmentScreen> {
       body: Column(
         children: [
           const ScreenHeader(title: 'Seguimiento'),
-          const Text('Texto..'),
           const Center(child: Text('Anexar evidencias'),),
         Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -90,16 +91,43 @@ class _FupTreatmentScreenState extends State<FupTreatmentScreen> {
                 icon: const Icon(Icons.image),
               )
             ]),
+          controlButtons(),
+        ],
+      ),
+    );
+  }
+
+
+  controlButtons(){
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(3, 25, 3, 3),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
           SizedBox(
-            width: 150,
+              width: 100,
+              height: 30,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const MyHomePage(title: 'Dermosolution',)));;
+
+                },
+                child: const Text("Aceptar"),
+              )
+          ),
+          SizedBox(
+            width: 100,
             height: 30,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.black),
-              onPressed: () async {
-                uploadPhotos();
-              },
-              child: const Text("Seleccionar partes"),
+                  backgroundColor: const Color.fromRGBO(239, 92, 92, 1.0)),
+              onPressed: () {
+                Navigator.pop(context);
+                    },
+              child: const Text("Regresar"),
             ),
           ),
         ],
