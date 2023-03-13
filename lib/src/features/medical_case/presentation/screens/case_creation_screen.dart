@@ -1,9 +1,11 @@
 import 'dart:io';
 import 'package:dermosolution_app/src/features/conditions/presentation/widgets/conditions_buttons.dart';
+import 'package:dermosolution_app/src/shared/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../body_part_selector/presentation/screens/body_part_selector_screen.dart';
 import '../../../conditions/presentation/widgets/header.dart';
 import '../widgets/case_info_form.dart';
@@ -11,6 +13,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:simple_s3/simple_s3.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:intl/intl.dart';
 
 import 'cases_list_screen.dart';
 
@@ -23,11 +27,14 @@ class CaseCreationScreen extends StatefulWidget {
 
 class _CaseCreationScreenState extends State<CaseCreationScreen> {
   final List<File?> images = [];
+  String baseUrl = dotenv.get('baseUrl',
+      fallback: 'https://dermosbkend.onrender.com/api/v1');
+  late int medicalCaseId;
 
   late bool loading = false;
   late Map<String, dynamic> body = {};
 
-  late dynamic formInfo = '';
+  late dynamic formInfo = ['Mácula', 'Anillo', 'Solitaria', 'Confluente', 'Palido',' Diagnostico por especialista'];
 
   Future pickImage(ImageSource source) async {
     try {
@@ -42,32 +49,67 @@ class _CaseCreationScreenState extends State<CaseCreationScreen> {
     super.initState();
   }
 
-  Future<http.Response> createCase(String title) {
-    return http.post(
-      Uri.parse('https://localhost:5000/caso'),
+  Future<http.Response> createCase(List<String> formInfo) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    var pacientePreference =  prefs.getInt('pacienteId').toString();
+    String paciente = pacientePreference;
+    DateTime now = DateTime.now();
+    String date = DateFormat('yyyy-MM-dd').format(now);
+    print(date);
+    http.Response medicalCaseRequest = await http.post(
+      Uri.parse('$baseUrl/casos-medicos/'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: jsonEncode(<String, String>{
-        'title': title,
+      body: jsonEncode(<String, dynamic>{
+        'descripcion': 'Descripción caso base',
+        "estado": "CREADO",
+        "fecha_creacion": date.toString(),
+        "paciente": paciente,
+        "medico": null,
+        "tipo": formInfo[0],
+        "forma":formInfo[1],
+        "numero": formInfo[2],
+        "distribucion": formInfo[3],
+        "color": formInfo[4],
+        "diagnosticos": [],
+        "imagenes": []
       }),
     );
+    print(medicalCaseRequest.body);
+    print('Crear caso' + medicalCaseRequest.statusCode.toString()) ;
+    String caseId = jsonDecode(medicalCaseRequest.body)['id'].toString();
+    var upload = uploadPhotos(caseId);
+    await upload;
+    return medicalCaseRequest;
   }
 
-  Future<void> uploadPhotos() async {
+  Future<void> uploadPhotos(String caseId) async {
     SimpleS3 _simpleS3 = SimpleS3();
+    final String s3_url ='https://dermosolutionsweb.s3.amazonaws.com/evidencias-casos/';
     var wait;
-    setState(() {
-      loading = true;
-    });
-    images.forEach((element) {
-        wait = _simpleS3.uploadFile(element!, 'dermosolutionsweb',
+    images.forEach((element) async {
+      wait = await _simpleS3.uploadFile(element!, 'dermosolutionsweb',
           'us-east-1:cfc6da9c-7723-4c6b-8111-05721308c8a6', AWSRegions.usEast1,
-          debugLog: true, s3FolderPath: "evidencias-casos");
-    });
-    await wait;
-     setState(() {
-       loading = false;
+          debugLog: false, s3FolderPath: "evidencias-casos");
+      await wait;
+      final wait_parsed = wait.substring(wait.toString().lastIndexOf('/') + 1);
+      print(s3_url + wait_parsed);
+      print('Ver datos' +wait);
+      final response= await http.post(
+        Uri.parse('$baseUrl/casos-medicos/$caseId/imagenes/'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, dynamic>{
+          "caso": "$caseId",
+          "url": s3_url + wait_parsed
+        }),
+      );
+      await response;
+      print(caseId);
+      print(response.body);
+      print('Subir foto'+response.statusCode.toString());
     });
   }
 
@@ -87,6 +129,7 @@ class _CaseCreationScreenState extends State<CaseCreationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(formInfo);
     return Scaffold(
       body: !loading
           ? SingleChildScrollView(
@@ -190,6 +233,9 @@ class _CaseCreationScreenState extends State<CaseCreationScreen> {
                         ),
                         ConditionsButtons(
                             acceptCallback: () async {
+                              setState(() {
+                                loading = true;
+                              });
                               if (images.isEmpty || body == null) {
                                 Fluttertoast.showToast(
                                   msg: "No se puede agregar sin foto",
@@ -200,18 +246,24 @@ class _CaseCreationScreenState extends State<CaseCreationScreen> {
                                   fontSize: 16.0,
                                 );
                               } else {
-                                await uploadPhotos();
+                                var x= createCase(formInfo);
+                                await x;
+                                setState(() {
+                                  loading = false;
+                                });
                                 if (!loading) {
                                   await Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                        const CasesScreen()),
+                                            const CasesScreen()),
                                   );
                                 }
                               }
                             },
-                            rejectCallback: () {})
+                            rejectCallback: () {
+                              Navigator.pushNamed(context, '/');
+                            })
                       ],
                     ),
                   )
