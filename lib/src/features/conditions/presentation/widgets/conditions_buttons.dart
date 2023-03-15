@@ -25,13 +25,7 @@ class _ConditionsButtonsState extends State<ConditionsButtons> {
             width: 100,
             height: 30,
             child: ElevatedButton(
-              onPressed: (){
-                //widget.acceptCallback,
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const MyHomePage(title: 'Dermosolution',)));;
-                  },
+              onPressed: widget.acceptCallback,
               child: const Text("Aceptar"),
             ),
           ),

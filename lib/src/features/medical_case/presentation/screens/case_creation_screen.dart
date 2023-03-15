@@ -76,7 +76,7 @@ class _CaseCreationScreenState extends State<CaseCreationScreen> {
         "imagenes": []
       }),
     );
-    print(medicalCaseRequest.body);
+    print('Body'+medicalCaseRequest.body);
     print('Crear caso' + medicalCaseRequest.statusCode.toString()) ;
     String caseId = jsonDecode(medicalCaseRequest.body)['id'].toString();
     var upload = uploadPhotos(caseId);
@@ -246,8 +246,8 @@ class _CaseCreationScreenState extends State<CaseCreationScreen> {
                                   fontSize: 16.0,
                                 );
                               } else {
-                                var x= createCase(formInfo);
-                                await x;
+                                createCase(formInfo);
+                                print('Caso creado');
                                 setState(() {
                                   loading = false;
                                 });
